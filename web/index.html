@@ -18,7 +18,6 @@
   .countdown{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;
     padding:7px 16px;font-size:.95rem;box-shadow:var(--shadow);margin-top:4px}
   .countdown b{color:var(--accent)}
-  /* ホームのアイコンボタン */
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
   .tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 14px;
     text-align:center;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s,box-shadow .15s}
@@ -27,13 +26,11 @@
   .tile .ic{font-size:2.6rem;line-height:1}
   .tile .lb{font-weight:700;margin-top:10px;font-size:1.05rem}
   .tile .sub{color:var(--muted);font-size:.8rem;margin-top:3px}
-  /* 汎用カード */
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 16px;
     box-shadow:var(--shadow);margin-top:14px}
   .back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--accent);
     font-size:1rem;cursor:pointer;padding:8px 4px;margin-top:6px}
   h2.sec{font-size:1.15rem;margin:14px 4px 2px}
-  /* 教科選択 */
   .subj-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
   .subj{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
     border-radius:14px;padding:14px;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s}
@@ -42,7 +39,6 @@
   .subj .nm{font-weight:700}
   .subj .dl{color:var(--muted);font-size:.78rem}
   .full{grid-column:1 / -1;justify-content:center;background:#eef3ff;border-color:#d6e2ff}
-  /* クイズ */
   .qhead{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.85rem}
   .prog{height:8px;background:#eef1f6;border-radius:99px;overflow:hidden;margin:10px 0 4px}
   .prog > i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
@@ -59,21 +55,25 @@
   .btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:12px 18px;font-size:1rem;
     font-weight:700;cursor:pointer}
   .btn.sub{background:#eef3ff;color:var(--accent)}
+  .btn.ghost{background:#fff;color:var(--muted);border:1px solid var(--line)}
+  .btn.sm{padding:8px 12px;font-size:.9rem}
   .verdict{margin-top:14px;font-weight:700;font-size:1.05rem}
   .verdict.ok{color:var(--ok)} .verdict.ng{color:var(--ng)}
   .explain{margin-top:8px;background:#f6f8fc;border-radius:10px;padding:10px 12px;color:#48566a;font-size:.95rem}
   .next{margin-top:16px;text-align:right}
-  /* 結果 */
   .score{text-align:center;padding:10px 0}
   .score .big{font-size:2.6rem;font-weight:800;color:var(--accent)}
   .score .msg{margin-top:8px;font-size:1.05rem}
-  /* スケジュール・範囲 */
   .day{border-left:4px solid var(--accent);padding:6px 0 6px 12px;margin:12px 0}
-  .day .d{font-weight:700}
+  .day .d{font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .day .edit{background:none;border:1px solid var(--line);border-radius:8px;color:var(--accent);
+    cursor:pointer;font-size:.8rem;padding:3px 9px;flex:none}
   .task{font-size:.93rem;margin:4px 0;color:#3c4858}
   .task .min{color:var(--accent);font-weight:700}
+  .note{font-size:.9rem;color:#2d7d5a;background:#eafaf4;border-radius:8px;padding:6px 10px;margin-top:5px}
   .rem{font-size:.85rem;color:#c0392b;margin-top:3px}
   .test-badge{display:inline-block;background:#fff2cc;color:#a6791b;border-radius:6px;padding:2px 8px;font-size:.8rem;font-weight:700}
+  .edited-badge{display:inline-block;background:#eef3ff;color:var(--accent);border-radius:6px;padding:1px 7px;font-size:.72rem;margin-left:6px}
   .tip{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
   .tip:last-child{border:none}
   .tip .n{flex:none;width:26px;height:26px;border-radius:50%;background:#eef3ff;color:var(--accent);
@@ -81,6 +81,23 @@
   .scope-h{font-weight:700;margin-top:6px}
   .scope-h .em{font-size:1.2rem;margin-right:6px}
   .scope-meta{font-size:.9rem;color:#48566a;margin:4px 0 0 30px}
+  /* フォーム */
+  .field{margin:10px 0}
+  .field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
+  .field input,.field textarea{width:100%;font-size:1rem;padding:10px;border:1px solid var(--line);
+    border-radius:10px;font-family:inherit}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+  .field textarea{min-height:64px;resize:vertical}
+  .edit-subj{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:12px;background:#fbfcfe}
+  .edit-subj .head{font-weight:700;font-size:1.05rem}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .savebar{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(245,247,251,0),var(--bg) 40%);
+    padding:14px 0 4px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+  .hint{font-size:.82rem;color:var(--muted);margin-top:6px;line-height:1.6}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#26303b;color:#fff;
+    padding:10px 18px;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+  .toast.show{opacity:1}
   .hidden{display:none}
   footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:30px}
 </style>
@@ -94,11 +111,12 @@
   <div id="app"></div>
   <footer>がんばれ才弥さん！ ／ 努力して結果が出れば自信に、出なくても経験が残る。</footer>
 </div>
+<div class="toast" id="toast"></div>
 
 <script>
-// ============ データ（テスト範囲・問題集） ============
-const SUBJECTS = [
-  { name:"社会", icon:"🌏", month:6, day:29,
+// ============ 既定データ（編集していないときの初期値） ============
+const DEFAULT_SUBJECTS = [
+  { name:"社会", icon:"🌏", month:6, day:29, submitDate:"2026-06-29",
     scope:"【歴史】教科書 P168〜239 ／ ワーク P58②〜P67,68① 【時事】4〜6月のニュース",
     submit:"ワーク提出：6/29(月)",
     advice:"重要語句＋歴史の流れ・地図・資料も確認。単元テストを見直す。時事は新聞/ニュースで補強。",
@@ -112,7 +130,7 @@ const SUBJECTS = [
       {q:"日本国憲法の三大原則のうち、戦争放棄を定めた条文は第何条？",choices:["第1条","第9条","第25条","第99条"],answer:"第9条",accept:["第9条"],explain:"第9条は戦争放棄・戦力不保持・交戦権の否認を定める。"},
       {q:"1956年の日ソ共同宣言の後、日本が加盟を認められた国際機関は？",answer:"国際連合",accept:["国際連合","国連"],explain:"ソ連の支持が得られ、1956年に国際連合へ加盟した。"},
     ]},
-  { name:"数学", icon:"📐", month:7, day:3,
+  { name:"数学", icon:"📐", month:7, day:3, submitDate:"",
     scope:"教科書 P12〜P56 ／ ワーク P4〜P43 ／ 単元テスト「多項式」（展開・因数分解・根号を含む数）",
     submit:"",
     advice:"ワーク・教科書を繰り返し解き直す。展開/因数分解/根号の計算＋証明など応用にも挑戦。",
@@ -126,7 +144,7 @@ const SUBJECTS = [
       {q:"(√3+1)(√3-1) を計算せよ",answer:"2",accept:["2"],explain:"(a+b)(a-b)=a²-b² → 3-1=2。"},
       {q:"6/√2 の分母を有理化せよ",answer:"3√2",accept:["3√2","3ルート2"],explain:"6/√2 = 6√2/2 = 3√2。"},
     ]},
-  { name:"国語", icon:"✍️", month:7, day:6,
+  { name:"国語", icon:"✍️", month:7, day:6, submitDate:"",
     scope:"『握手』『俳句の世界』『和語・漢語・外来語』ほか ／ 範囲の漢字 ／ これまでの小テスト",
     submit:"ワーク P6〜47",
     advice:"教科書を読み直し、授業・家庭学習プリントを復習。漢字の読み書きを確実に。",
@@ -140,7 +158,7 @@ const SUBJECTS = [
       {q:"漢字の読みを答えよ：「拍手」",answer:"はくしゅ",accept:["はくしゅ"],explain:"「拍手（はくしゅ）」。"},
       {q:"ひらがなを漢字に直せ：「ちんもく」",answer:"沈黙",accept:["沈黙"],explain:"「沈黙（ちんもく）」＝だまっていること。"},
     ]},
-  { name:"英語", icon:"🔤", month:7, day:10,
+  { name:"英語", icon:"🔤", month:7, day:10, submitDate:"2026-07-10",
     scope:"教科書 P8〜P37 ／ ワーク P4〜P37（P35を除く）",
     submit:"ワーク提出：7/10(金)（テスト終了後に回収）",
     advice:"ワークを何回も解き直す。対話文（AさんBさんの文）を確認する。",
@@ -153,7 +171,7 @@ const SUBJECTS = [
       {q:"現在完了の継続で「〜の間」を表すのは？",choices:["for","since","during","while"],answer:"for",accept:["for"],explain:"for＋期間（for ten years）、since＋起点（since 2010）。"},
       {q:"日本語にせよ：I have just arrived at the station.",answer:"私はちょうど駅に着いたところだ",accept:["ちょうど駅に着いたところ","ちょうど駅についたところ","私はちょうど駅に着いたところだ"],explain:"完了用法 have just + 過去分詞＝「ちょうど〜したところ」。"},
     ]},
-  { name:"理科", icon:"🔬", month:7, day:13,
+  { name:"理科", icon:"🔬", month:7, day:13, submitDate:"2026-07-01",
     scope:"教科書 P6〜83（単元：運動とエネルギー）／ ワーク P2〜33",
     submit:"ワーク提出：7/1(水)（丸付け・訂正まで／教科連絡係が回収）",
     advice:"教科書・ノートを見直す。作図や計算問題は必ず出る。ワークを何回も解き直す。",
@@ -168,8 +186,34 @@ const SUBJECTS = [
       {q:"120kmを2時間で進んだときの平均の速さは時速何km？",answer:"60km/h",accept:["60","60km/h","時速60km","60km"],explain:"速さ＝距離÷時間＝120÷2＝60km/h。"},
     ]},
 ];
-const SUBMIT_DUES=[{m:7,d:1,t:"理科ワーク提出（7/1 水・丸付け＆訂正まで）"},{m:6,d:29,t:"社会ワーク提出（6/29 月）"},{m:7,d:10,t:"英語ワーク提出（7/10 金・テスト後回収）"}];
 const WD=["日","月","火","水","木","金","土"];
+
+// ============ 保存（localStorage）============
+// STORE = { subjects:{教科名:{testDate,submitDate,scope,submit,advice}}, settings:{weekdayMin,weekendMin}, days:{ISO日付:{note,plan}} }
+const STORE_KEY="saiya_study_v1";
+function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){return{};}}
+function saveStore(){localStorage.setItem(STORE_KEY,JSON.stringify(STORE));}
+let STORE=loadStore();
+STORE.subjects=STORE.subjects||{};
+STORE.settings=Object.assign({weekdayMin:60,weekendMin:120},STORE.settings||{});
+STORE.days=STORE.days||{};
+
+// 既定値に編集内容を重ねた「実際に使う教科リスト」を返す
+function getSubjects(){
+  return DEFAULT_SUBJECTS.map(d=>{
+    const o=STORE.subjects[d.name]||{};
+    let month=d.month, day=d.day;
+    if(o.testDate){const p=o.testDate.split("-").map(Number);month=p[1];day=p[2];}
+    return {
+      name:d.name, icon:d.icon, month, day,
+      submitDate:o.submitDate!==undefined?o.submitDate:(d.submitDate||""),
+      scope:o.scope!==undefined?o.scope:d.scope,
+      submit:o.submit!==undefined?o.submit:d.submit,
+      advice:o.advice!==undefined?o.advice:d.advice,
+      problems:d.problems,
+    };
+  });
+}
 
 // ============ 日付ユーティリティ ============
 function today(){const n=new Date();const s=new Date(2026,5,13);return n<s?s:n;}
@@ -177,43 +221,65 @@ function testDate(s){return new Date(2026,s.month-1,s.day);}
 function dayDiff(a,b){return Math.round((stripTime(b)-stripTime(a))/86400000);}
 function stripTime(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
 function fmt(d){return (d.getMonth()+1)+"/"+d.getDate();}
+function iso(d){const m=String(d.getMonth()+1).padStart(2,"0");const dd=String(d.getDate()).padStart(2,"0");return d.getFullYear()+"-"+m+"-"+dd;}
 function sameDay(a,b){return stripTime(a).getTime()===stripTime(b).getTime();}
+function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 
 function nextTest(t){
   let best=null,name="";
-  for(const s of SUBJECTS){const td=testDate(s);if(td<stripTime(t))continue;if(!best||td<best){best=td;name=s.name;}}
+  for(const s of getSubjects()){const td=testDate(s);if(td<stripTime(t))continue;if(!best||td<best){best=td;name=s.name;}}
   if(!best)return null;
   return {name,days:dayDiff(t,best)};
 }
 
-// ============ スケジュール生成（Go版の移植） ============
+// ============ スケジュール生成 ============
 function phaseDetail(s,daysUntil){
   if(daysUntil<=2)return"総仕上げ：暗記の最終確認＋単元テスト/ワークの間違い直し";
   if(daysUntil<=6)return"問題演習：ワークを2周目、間違えた問題を中心に解き直し";
   return"基礎固め：教科書を読み直し＋ワークを1周";
 }
-function remindersFor(d){
+function remindersFor(d,subs){
   const out=[];
-  for(const due of SUBMIT_DUES){const dd=dayDiff(d,new Date(2026,due.m-1,due.d));
-    if(dd>=0&&dd<=3)out.push(dd===0?("★本日提出: "+due.t):("提出まであと"+dd+"日: "+due.t));}
+  for(const s of subs){
+    if(!s.submitDate)continue;
+    const p=s.submitDate.split("-").map(Number);
+    const due=new Date(p[0],p[1]-1,p[2]);
+    const dd=dayDiff(d,due);
+    if(dd>=0&&dd<=3){
+      const label=`${s.name}ワーク提出（${p[1]}/${p[2]}）`;
+      out.push(dd===0?("★本日提出: "+label):("提出まであと"+dd+"日: "+label));
+    }
+  }
   return out;
 }
 function genSchedule(start){
-  const subs=[...SUBJECTS].sort((a,b)=>testDate(a)-testDate(b));
+  const subs=getSubjects().slice().sort((a,b)=>testDate(a)-testDate(b));
   const last=testDate(subs[subs.length-1]);
+  const wkd=STORE.settings.weekdayMin, wke=STORE.settings.weekendMin;
   const plans=[];
   for(let d=stripTime(start);d<=last;d=new Date(d.getTime()+86400000)){
-    const plan={date:new Date(d),tasks:[],reminders:remindersFor(d),testToday:""};
+    const plan={date:new Date(d),tasks:[],reminders:remindersFor(d,subs),testToday:"",note:"",custom:false};
     for(const s of subs)if(sameDay(testDate(s),d))plan.testToday=s.name;
     const up=subs.filter(s=>testDate(s)>=stripTime(d));
-    if(up.length===0){plans.push(plan);continue;}
-    const wd=d.getDay();let budget=(wd===0||wd===6)?120:60;
-    const next=up[0];const du=dayDiff(d,testDate(next));
-    if(du<=2){plan.tasks.push({subject:next.name,min:budget,detail:phaseDetail(next,du)});}
-    else if(up.length>=2){const p=Math.floor(budget*2/3);const sec=up[1];
-      plan.tasks.push({subject:next.name,min:p,detail:phaseDetail(next,du)});
-      plan.tasks.push({subject:sec.name,min:budget-p,detail:phaseDetail(sec,dayDiff(d,testDate(sec)))});}
-    else{plan.tasks.push({subject:next.name,min:budget,detail:phaseDetail(next,du)});}
+    // 自動生成（おまかせ）
+    if(up.length>0){
+      const wd=d.getDay();let budget=(wd===0||wd===6)?wke:wkd;
+      const next=up[0];const du=dayDiff(d,testDate(next));
+      if(du<=2){plan.tasks.push({subject:next.name,min:budget,detail:phaseDetail(next,du)});}
+      else if(up.length>=2){const p=Math.floor(budget*2/3);const sec=up[1];
+        plan.tasks.push({subject:next.name,min:p,detail:phaseDetail(next,du)});
+        plan.tasks.push({subject:sec.name,min:budget-p,detail:phaseDetail(sec,dayDiff(d,testDate(sec)))});}
+      else{plan.tasks.push({subject:next.name,min:budget,detail:phaseDetail(next,du)});}
+    }
+    // 手動編集（上書き）
+    const ov=STORE.days[iso(d)];
+    if(ov){
+      plan.note=ov.note||"";
+      if(ov.plan&&ov.plan.trim()!==""){
+        plan.tasks=ov.plan.split("\n").map(l=>l.trim()).filter(l=>l!=="").map(l=>({line:l}));
+        plan.custom=true;
+      }
+    }
     plans.push(plan);
   }
   return plans;
@@ -239,14 +305,17 @@ function isCorrect(p,input){
   return acc.some(a=>normalize(a)===n);
 }
 
-// ============ 画面描画 ============
+// ============ 共通UI ============
 const app=document.getElementById("app");
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
+  clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),1800);}
 function setCountdown(){
   const nt=nextTest(today());const el=document.getElementById("countdown");
   if(!nt){el.innerHTML="🎉 テストはすべて終了！";return;}
-  el.innerHTML = nt.days===0 ? ("今日は <b>"+nt.name+"</b> のテスト本番！")
-    : ("次のテスト：<b>"+nt.name+"</b> まで あと <b>"+nt.days+"</b> 日");
+  el.innerHTML = nt.days===0 ? ("今日は <b>"+esc(nt.name)+"</b> のテスト本番！")
+    : ("次のテスト：<b>"+esc(nt.name)+"</b> まで あと <b>"+nt.days+"</b> 日");
 }
+function backBtn(to){return `<button class="back" onclick="${to||'home()'}">← もどる</button>`;}
 
 function home(){
   setCountdown();
@@ -256,52 +325,185 @@ function home(){
       <div class="tile" onclick="viewQuizSelect()"><div class="ic">✏️</div><div class="lb">問題集に挑戦</div><div class="sub">クイズで力だめし</div></div>
       <div class="tile" onclick="viewScope()"><div class="ic">📖</div><div class="lb">テスト範囲</div><div class="sub">範囲と提出物</div></div>
       <div class="tile" onclick="viewTips()"><div class="ic">💡</div><div class="lb">点数アップ</div><div class="sub">勉強のコツ</div></div>
+      <div class="tile" onclick="viewEdit()"><div class="ic">⚙️</div><div class="lb">編集</div><div class="sub">範囲・提出物・予定</div></div>
+      <div class="tile" onclick="viewBackup()"><div class="ic">💾</div><div class="lb">バックアップ</div><div class="sub">書き出し・読み込み</div></div>
     </div>`;
 }
-function backBtn(){return `<button class="back" onclick="home()">← メニューにもどる</button>`;}
 
+// ============ 今日やること / スケジュール ============
 function viewToday(){
   const plans=genSchedule(today());const t=today();
   let body="";
   const todayPlan=plans.find(p=>sameDay(p.date,t));
   if(todayPlan){
     body+=`<div class="card"><h2 class="sec">📅 今日 ${fmt(t)}(${WD[t.getDay()]}) やること</h2>`;
-    if(todayPlan.testToday)body+=`<p><span class="test-badge">★ テスト本番：${todayPlan.testToday}</span></p>`;
-    if(todayPlan.tasks.length===0)body+=`<p>予定なし（おつかれさま！）</p>`;
-    for(const tk of todayPlan.tasks)body+=`<p class="task">・${tk.subject} <span class="min">${tk.min}分</span> … ${tk.detail}</p>`;
-    for(const r of todayPlan.reminders)body+=`<p class="rem">⚠ ${r}</p>`;
+    body+=renderTaskLines(todayPlan);
     body+=`</div>`;
   } else body+=`<div class="card"><p>今日の予定はありません（テスト期間外、または全テスト終了）。</p></div>`;
-  // 全日程
-  body+=`<h2 class="sec">🗓 これからの全日程</h2><div class="card">`;
+  body+=`<h2 class="sec">🗓 これからの全日程 <span class="hint">（各日の「✏️編集」で予定・メモを変えられます）</span></h2><div class="card">`;
   for(const p of plans){
     if(p.date<stripTime(t))continue;
-    body+=`<div class="day"><div class="d">${fmt(p.date)}(${WD[p.date.getDay()]})${p.testToday?` <span class="test-badge">本番：${p.testToday}</span>`:""}</div>`;
-    for(const tk of p.tasks)body+=`<div class="task">・${tk.subject} <span class="min">${tk.min}分</span> … ${tk.detail}</div>`;
-    for(const r of p.reminders)body+=`<div class="rem">⚠ ${r}</div>`;
+    body+=`<div class="day"><div class="d"><span>${fmt(p.date)}(${WD[p.date.getDay()]})${p.testToday?` <span class="test-badge">本番：${esc(p.testToday)}</span>`:""}${p.custom?`<span class="edited-badge">編集済</span>`:""}</span>
+      <button class="edit" onclick="editDay('${iso(p.date)}')">✏️編集</button></div>`;
+    body+=renderTaskLines(p);
     body+=`</div>`;
   }
   body+=`</div>`;
   app.innerHTML=backBtn()+body;
 }
+function renderTaskLines(p){
+  let s="";
+  if(p.testToday)s+=`<p><span class="test-badge">★ テスト本番：${esc(p.testToday)}</span></p>`;
+  if(p.tasks.length===0&&!p.testToday)s+=`<p class="task">予定なし</p>`;
+  for(const tk of p.tasks){
+    if(tk.line!==undefined)s+=`<p class="task">・${esc(tk.line)}</p>`;
+    else s+=`<p class="task">・${esc(tk.subject)} <span class="min">${tk.min}分</span> … ${esc(tk.detail)}</p>`;
+  }
+  if(p.note)s+=`<div class="note">📝 ${esc(p.note)}</div>`;
+  for(const r of p.reminders)s+=`<p class="rem">⚠ ${esc(r)}</p>`;
+  return s;
+}
 
+// 1日分の編集画面
+function editDay(isoDate){
+  const ov=STORE.days[isoDate]||{};
+  const [y,m,d]=isoDate.split("-").map(Number);
+  const dt=new Date(y,m-1,d);
+  app.innerHTML=backBtn("viewToday()")+`
+    <h2 class="sec">✏️ ${fmt(dt)}(${WD[dt.getDay()]}) の予定を編集</h2>
+    <div class="card">
+      <div class="field">
+        <label>この日の予定（1行に1つ。空っぽなら自動の「おまかせ」プランに戻ります）</label>
+        <textarea id="ed_plan" placeholder="例）数学 ワークP10〜20&#10;英語 単語テスト勉強 30分"></textarea>
+      </div>
+      <div class="field">
+        <label>メモ（部活・予定など。自由に）</label>
+        <textarea id="ed_note" placeholder="例）午前は部活、夜に勉強"></textarea>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="saveDay('${isoDate}')">保存</button>
+        <button class="btn ghost" onclick="viewToday()">キャンセル</button>
+        <button class="btn ghost" onclick="clearDay('${isoDate}')">この日をリセット</button>
+      </div>
+      <div class="hint">「予定」を書くと、その日はおまかせプランの代わりにあなたの予定が表示されます。空にして保存すると自動プランに戻ります。</div>
+    </div>`;
+  document.getElementById("ed_plan").value=ov.plan||"";
+  document.getElementById("ed_note").value=ov.note||"";
+}
+function saveDay(isoDate){
+  const plan=document.getElementById("ed_plan").value;
+  const note=document.getElementById("ed_note").value;
+  if((plan&&plan.trim())||(note&&note.trim())){STORE.days[isoDate]={plan:plan,note:note};}
+  else{delete STORE.days[isoDate];}
+  saveStore();toast("保存しました");viewToday();
+}
+function clearDay(isoDate){delete STORE.days[isoDate];saveStore();toast("この日をリセットしました");viewToday();}
+
+// ============ テスト範囲（表示）============
 function viewScope(){
-  let body=`<h2 class="sec">📖 テスト範囲・提出物</h2><div class="card">`;
-  for(const s of SUBJECTS){
+  let body=`<h2 class="sec">📖 テスト範囲・提出物 <span class="hint">（変更は「⚙️編集」から）</span></h2><div class="card">`;
+  for(const s of getSubjects()){
     body+=`<div style="margin:10px 0 14px">
-      <div class="scope-h"><span class="em">${s.icon}</span>${s.name}（${s.month}/${s.day} 実施）</div>
-      <div class="scope-meta">範囲: ${s.scope}</div>
-      ${s.submit?`<div class="scope-meta">提出: ${s.submit}</div>`:""}
-      <div class="scope-meta">助言: ${s.advice}</div></div>`;
+      <div class="scope-h"><span class="em">${s.icon}</span>${esc(s.name)}（${s.month}/${s.day} 実施）</div>
+      <div class="scope-meta">範囲: ${esc(s.scope)}</div>
+      ${s.submit?`<div class="scope-meta">提出: ${esc(s.submit)}</div>`:""}
+      <div class="scope-meta">助言: ${esc(s.advice)}</div></div>`;
   }
   body+=`</div>`;
   app.innerHTML=backBtn()+body;
 }
 
+// ============ 編集（教科＋スケジュール設定）============
+function viewEdit(){
+  const subs=getSubjects();
+  let body=`<h2 class="sec">⚙️ 編集</h2>
+    <div class="card">
+      <div class="head" style="font-weight:700">📐 スケジュール設定</div>
+      <div class="row2">
+        <div class="field"><label>平日の勉強時間（分）</label><input id="set_wkd" type="number" min="0" step="10"></div>
+        <div class="field"><label>休日の勉強時間（分）</label><input id="set_wke" type="number" min="0" step="10"></div>
+      </div>
+      <div class="hint">この時間を各教科に自動で配分します。日ごとの細かい予定は「今日やること」画面の各日「✏️編集」から変えられます。</div>
+    </div>
+    <h2 class="sec">各教科のテスト範囲・提出物</h2>`;
+  subs.forEach((s,i)=>{
+    body+=`<div class="edit-subj">
+      <div class="head">${s.icon} ${esc(s.name)}</div>
+      <div class="row2">
+        <div class="field"><label>テスト日</label><input id="s_date_${i}" type="date"></div>
+        <div class="field"><label>提出物の締切（任意）</label><input id="s_sub_${i}" type="date"></div>
+      </div>
+      <div class="field"><label>テスト範囲</label><textarea id="s_scope_${i}"></textarea></div>
+      <div class="field"><label>提出物（説明）</label><input id="s_subtext_${i}" type="text"></div>
+      <div class="field"><label>アドバイス</label><textarea id="s_adv_${i}"></textarea></div>
+    </div>`;
+  });
+  body+=`<div class="savebar">
+      <button class="btn" onclick="saveEdit()">すべて保存</button>
+      <button class="btn ghost" onclick="home()">もどる</button>
+      <button class="btn ghost" onclick="resetAll()">初期状態に戻す</button>
+    </div>
+    <div class="hint">※ 編集内容はこの端末のブラウザに保存されます。別の端末でも使いたいときは「💾バックアップ」で書き出して読み込んでください。</div>`;
+  app.innerHTML=backBtn()+body;
+  // 値をセット
+  document.getElementById("set_wkd").value=STORE.settings.weekdayMin;
+  document.getElementById("set_wke").value=STORE.settings.weekendMin;
+  subs.forEach((s,i)=>{
+    document.getElementById(`s_date_${i}`).value=`2026-${String(s.month).padStart(2,"0")}-${String(s.day).padStart(2,"0")}`;
+    document.getElementById(`s_sub_${i}`).value=s.submitDate||"";
+    document.getElementById(`s_scope_${i}`).value=s.scope||"";
+    document.getElementById(`s_subtext_${i}`).value=s.submit||"";
+    document.getElementById(`s_adv_${i}`).value=s.advice||"";
+  });
+}
+function saveEdit(){
+  STORE.settings.weekdayMin=Math.max(0,parseInt(document.getElementById("set_wkd").value||"0",10));
+  STORE.settings.weekendMin=Math.max(0,parseInt(document.getElementById("set_wke").value||"0",10));
+  DEFAULT_SUBJECTS.forEach((d,i)=>{
+    STORE.subjects[d.name]={
+      testDate:document.getElementById(`s_date_${i}`).value||"",
+      submitDate:document.getElementById(`s_sub_${i}`).value||"",
+      scope:document.getElementById(`s_scope_${i}`).value,
+      submit:document.getElementById(`s_subtext_${i}`).value,
+      advice:document.getElementById(`s_adv_${i}`).value,
+    };
+  });
+  saveStore();toast("保存しました");home();
+}
+function resetAll(){
+  if(!confirm("すべての編集内容（範囲・提出物・予定・設定）を初期状態に戻します。よろしいですか？"))return;
+  STORE={subjects:{},settings:{weekdayMin:60,weekendMin:120},days:{}};
+  saveStore();toast("初期状態に戻しました");home();
+}
+
+// ============ バックアップ ============
+function viewBackup(){
+  app.innerHTML=backBtn()+`
+    <h2 class="sec">💾 バックアップ（他の端末へ移す）</h2>
+    <div class="card">
+      <p class="hint">編集内容はこの端末のブラウザに保存されています。下の文字列をコピーして保存すれば、別の端末の「読み込み」に貼り付けて同じ設定を再現できます。</p>
+      <div class="field"><label>書き出し（この内容をコピー）</label><textarea id="bk_out" readonly></textarea></div>
+      <div class="actions"><button class="btn sub sm" onclick="copyBackup()">コピー</button></div>
+      <div class="field" style="margin-top:18px"><label>読み込み（コピーした内容を貼り付け）</label><textarea id="bk_in" placeholder="ここに貼り付け"></textarea></div>
+      <div class="actions"><button class="btn" onclick="importBackup()">読み込む</button><button class="btn ghost" onclick="home()">もどる</button></div>
+    </div>`;
+  document.getElementById("bk_out").value=JSON.stringify(STORE);
+}
+function copyBackup(){const el=document.getElementById("bk_out");el.select();
+  try{navigator.clipboard.writeText(el.value);}catch(e){document.execCommand("copy");}toast("コピーしました");}
+function importBackup(){
+  const v=document.getElementById("bk_in").value.trim();if(!v){toast("貼り付けてください");return;}
+  try{const obj=JSON.parse(v);
+    STORE={subjects:obj.subjects||{},settings:Object.assign({weekdayMin:60,weekendMin:120},obj.settings||{}),days:obj.days||{}};
+    saveStore();toast("読み込みました");home();
+  }catch(e){toast("読み込めませんでした（内容を確認）");}
+}
+
+// ============ ヒント ============
 function viewTips(){
   const tips=[
     "ワークは2周＋間違い直し。これが一番点になる。",
-    "提出物は締切前に終わらせる（社会6/29・理科7/1・英語7/10）。",
+    "提出物は締切前に終わらせる。",
     "間違えた問題はノートに集めて、前日に見返す。",
     "25分集中＋5分休憩。スマホは別の部屋に。",
     "数学・理科は途中式と単位を必ず書く（ミス防止）。",
@@ -309,72 +511,66 @@ function viewTips(){
     "国語は漢字で確実に得点（読み書き両方）。",
   ];
   let body=`<h2 class="sec">💡 点数アップのコツ</h2><div class="card">`;
-  tips.forEach((t,i)=>{body+=`<div class="tip"><div class="n">${i+1}</div><div>${t}</div></div>`;});
+  tips.forEach((t,i)=>{body+=`<div class="tip"><div class="n">${i+1}</div><div>${esc(t)}</div></div>`;});
   body+=`</div>`;
   app.innerHTML=backBtn()+body;
 }
 
+// ============ クイズ ============
 function viewQuizSelect(){
-  const t=today();
+  const t=today();const subs=getSubjects();
   let body=`<h2 class="sec">✏️ どの教科に挑戦する？</h2><div class="subj-list">`;
-  SUBJECTS.forEach((s,i)=>{
+  subs.forEach((s,i)=>{
     const du=dayDiff(t,testDate(s));
     const dl=du>=0?`${s.month}/${s.day}・あと${du}日`:`${s.month}/${s.day}・終了`;
     body+=`<div class="subj" onclick="startQuiz(${i})"><div class="ic">${s.icon}</div>
-      <div><div class="nm">${s.name}</div><div class="dl">${dl}</div></div></div>`;
+      <div><div class="nm">${esc(s.name)}</div><div class="dl">${dl}</div></div></div>`;
   });
   body+=`<div class="subj full" onclick="startQuiz(-1)"><div class="ic">🎯</div><div class="nm">全教科とおして挑戦</div></div>`;
   body+=`</div>`;
   app.innerHTML=backBtn()+body;
 }
-
-// ============ クイズ進行 ============
 let QZ=null;
 function startQuiz(idx){
-  let items=[];
-  if(idx===-1){for(const s of SUBJECTS)for(const p of s.problems)items.push({subject:s.name,icon:s.icon,p});}
-  else{const s=SUBJECTS[idx];for(const p of s.problems)items.push({subject:s.name,icon:s.icon,p});}
-  QZ={items,i:0,correct:0,answered:false};
-  renderQuestion();
+  const subs=getSubjects();let items=[];
+  if(idx===-1){for(const s of subs)for(const p of s.problems)items.push({subject:s.name,icon:s.icon,p});}
+  else{const s=subs[idx];for(const p of s.problems)items.push({subject:s.name,icon:s.icon,p});}
+  QZ={items,i:0,correct:0,answered:false};renderQuestion();
 }
 function renderQuestion(){
   const {items,i}=QZ;
   if(i>=items.length){return renderResult();}
   const it=items[i];const p=it.p;
-  let body=backBtn();
+  let body=backBtn("viewQuizSelect()");
   body+=`<div class="card">
-    <div class="qhead"><span>${it.icon} ${it.subject}</span><span>第 ${i+1} / ${items.length} 問</span></div>
+    <div class="qhead"><span>${it.icon} ${esc(it.subject)}</span><span>第 ${i+1} / ${items.length} 問</span></div>
     <div class="prog"><i style="width:${(i/items.length)*100}%"></i></div>
-    <div class="qtext">${p.q}</div>`;
+    <div class="qtext">${esc(p.q)}</div>`;
   if(p.choices&&p.choices.length){
     body+=`<div class="choices" id="choices">`;
-    p.choices.forEach((c,ci)=>{body+=`<button class="choice" onclick="answerChoice(${ci})">${c}</button>`;});
+    p.choices.forEach((c,ci)=>{body+=`<button class="choice" onclick="answerChoice(${ci})">${esc(c)}</button>`;});
     body+=`</div>`;
   }else{
     body+=`<div class="answerbox"><input id="ans" type="text" placeholder="答えを入力" autocomplete="off">
       <button class="btn" onclick="answerText()">こたえる</button></div>`;
   }
-  body+=`<div id="result"></div>`;
-  body+=`</div>`;
+  body+=`<div id="result"></div></div>`;
   app.innerHTML=body;
   const inp=document.getElementById("ans");
   if(inp){inp.focus();inp.addEventListener("keydown",e=>{if(e.key==="Enter")answerText();});}
 }
 function showVerdict(ok){
-  const it=QZ.items[QZ.i];const p=it.p;
-  if(ok)QZ.correct++;
+  const it=QZ.items[QZ.i];const p=it.p;if(ok)QZ.correct++;
   const r=document.getElementById("result");
-  r.innerHTML=`<div class="verdict ${ok?'ok':'ng'}">${ok?"⭕ 正解！":"❌ 不正解… 正解は「"+p.answer+"」"}</div>
-    ${p.explain?`<div class="explain">💡 ${p.explain}</div>`:""}
+  r.innerHTML=`<div class="verdict ${ok?'ok':'ng'}">${ok?"⭕ 正解！":"❌ 不正解… 正解は「"+esc(p.answer)+"」"}</div>
+    ${p.explain?`<div class="explain">💡 ${esc(p.explain)}</div>`:""}
     <div class="next"><button class="btn" onclick="nextQuestion()">${QZ.i+1>=QZ.items.length?"結果を見る →":"次の問題 →"}</button></div>`;
   QZ.answered=true;
 }
 function answerChoice(ci){
-  if(QZ.answered)return;
-  const it=QZ.items[QZ.i];const p=it.p;
+  if(QZ.answered)return;const it=QZ.items[QZ.i];const p=it.p;
   const ok=normalize(p.choices[ci])===normalize(p.answer);
-  const btns=document.querySelectorAll("#choices .choice");
-  btns.forEach((b,bi)=>{
+  document.querySelectorAll("#choices .choice").forEach((b,bi)=>{
     b.style.pointerEvents="none";
     if(normalize(p.choices[bi])===normalize(p.answer))b.classList.add("correct");
     else if(bi===ci&&!ok)b.classList.add("wrong");
@@ -382,10 +578,8 @@ function answerChoice(ci){
   showVerdict(ok);
 }
 function answerText(){
-  if(QZ.answered)return;
-  const it=QZ.items[QZ.i];const p=it.p;
-  const v=document.getElementById("ans").value;
-  document.getElementById("ans").disabled=true;
+  if(QZ.answered)return;const it=QZ.items[QZ.i];const p=it.p;
+  const v=document.getElementById("ans").value;document.getElementById("ans").disabled=true;
   showVerdict(isCorrect(p,v));
 }
 function nextQuestion(){QZ.i++;QZ.answered=false;renderQuestion();}
@@ -395,9 +589,9 @@ function renderResult(){
   if(correct===items.length)msg="🎉 全問正解！この調子で本番もいける！";
   else if(pct>=80)msg="👍 よくできています。間違えた問題だけもう一度！";
   else msg="📚 間違えた問題は解説を読んで、明日また挑戦しよう。";
-  app.innerHTML=backBtn()+`<div class="card score">
+  app.innerHTML=backBtn("viewQuizSelect()")+`<div class="card score">
     <div class="big">${correct} / ${items.length}</div>
-    <div>正答率 ${pct}%</div><div class="msg">${msg}</div>
+    <div>正答率 ${pct}%</div><div class="msg">${esc(msg)}</div>
     <div style="margin-top:18px"><button class="btn" onclick="viewQuizSelect()">もう一度えらぶ</button></div>
   </div>`;
 }
