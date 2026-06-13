@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>才弥さん 期末テスト対策</title>
+<style>
+  :root{
+    --bg:#f5f7fb; --card:#ffffff; --ink:#26303b; --muted:#7a8696;
+    --line:#e6eaf0; --accent:#4a7dff; --ok:#28c08a; --ng:#ff6b6b; --shadow:0 6px 20px rgba(40,60,90,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:18px 16px 60px}
+  header.top{text-align:center;padding:14px 0 6px}
+  header.top h1{font-size:1.25rem;margin:.2em 0}
+  .countdown{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:7px 16px;font-size:.95rem;box-shadow:var(--shadow);margin-top:4px}
+  .countdown b{color:var(--accent)}
+  /* ホームのアイコンボタン */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 14px;
+    text-align:center;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s,box-shadow .15s}
+  .tile:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(40,60,90,.14)}
+  .tile:active{transform:translateY(0)}
+  .tile .ic{font-size:2.6rem;line-height:1}
+  .tile .lb{font-weight:700;margin-top:10px;font-size:1.05rem}
+  .tile .sub{color:var(--muted);font-size:.8rem;margin-top:3px}
+  /* 汎用カード */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 16px;
+    box-shadow:var(--shadow);margin-top:14px}
+  .back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--accent);
+    font-size:1rem;cursor:pointer;padding:8px 4px;margin-top:6px}
+  h2.sec{font-size:1.15rem;margin:14px 4px 2px}
+  /* 教科選択 */
+  .subj-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  .subj{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:14px;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s}
+  .subj:hover{transform:translateY(-2px)}
+  .subj .ic{font-size:1.8rem}
+  .subj .nm{font-weight:700}
+  .subj .dl{color:var(--muted);font-size:.78rem}
+  .full{grid-column:1 / -1;justify-content:center;background:#eef3ff;border-color:#d6e2ff}
+  /* クイズ */
+  .qhead{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.85rem}
+  .prog{height:8px;background:#eef1f6;border-radius:99px;overflow:hidden;margin:10px 0 4px}
+  .prog > i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+  .qtext{font-size:1.15rem;font-weight:700;margin:14px 0;line-height:1.5}
+  .choices{display:flex;flex-direction:column;gap:10px}
+  .choice{text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:13px 14px;
+    font-size:1rem;cursor:pointer;transition:border-color .1s,background .1s}
+  .choice:hover{border-color:var(--accent)}
+  .choice.correct{border-color:var(--ok);background:#eafaf4}
+  .choice.wrong{border-color:var(--ng);background:#ffeeee}
+  .answerbox{display:flex;gap:8px;margin-top:6px}
+  .answerbox input{flex:1;font-size:1.05rem;padding:12px;border:2px solid var(--line);border-radius:12px}
+  .answerbox input:focus{outline:none;border-color:var(--accent)}
+  .btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:12px 18px;font-size:1rem;
+    font-weight:700;cursor:pointer}
+  .btn.sub{background:#eef3ff;color:var(--accent)}
+  .verdict{margin-top:14px;font-weight:700;font-size:1.05rem}
+  .verdict.ok{color:var(--ok)} .verdict.ng{color:var(--ng)}
+  .explain{margin-top:8px;background:#f6f8fc;border-radius:10px;padding:10px 12px;color:#48566a;font-size:.95rem}
+  .next{margin-top:16px;text-align:right}
+  /* 結果 */
+  .score{text-align:center;padding:10px 0}
+  .score .big{font-size:2.6rem;font-weight:800;color:var(--accent)}
+  .score .msg{margin-top:8px;font-size:1.05rem}
+  /* スケジュール・範囲 */
+  .day{border-left:4px solid var(--accent);padding:6px 0 6px 12px;margin:12px 0}
+  .day .d{font-weight:700}
+  .task{font-size:.93rem;margin:4px 0;color:#3c4858}
+  .task .min{color:var(--accent);font-weight:700}
+  .rem{font-size:.85rem;color:#c0392b;margin-top:3px}
+  .test-badge{display:inline-block;background:#fff2cc;color:#a6791b;border-radius:6px;padding:2px 8px;font-size:.8rem;font-weight:700}
+  .tip{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .tip:last-child{border:none}
+  .tip .n{flex:none;width:26px;height:26px;border-radius:50%;background:#eef3ff;color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+  .scope-h{font-weight:700;margin-top:6px}
+  .scope-h .em{font-size:1.2rem;margin-right:6px}
+  .scope-meta{font-size:.9rem;color:#48566a;margin:4px 0 0 30px}
+  .hidden{display:none}
+  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>📚 才弥さん 期末テスト対策</h1>
+    <div class="countdown" id="countdown"></div>
+  </header>
+  <div id="app"></div>
+  <footer>がんばれ才弥さん！ ／ 努力して結果が出れば自信に、出なくても経験が残る。</footer>
+</div>
+
+<script>
+// ============ データ（テスト範囲・問題集） ============
+const SUBJECTS = [
+  { name:"社会", icon:"🌏", month:6, day:29,
+    scope:"【歴史】教科書 P168〜239 ／ ワーク P58②〜P67,68① 【時事】4〜6月のニュース",
+    submit:"ワーク提出：6/29(月)",
+    advice:"重要語句＋歴史の流れ・地図・資料も確認。単元テストを見直す。時事は新聞/ニュースで補強。",
+    problems:[
+      {q:"第一次世界大戦のきっかけとなった、1914年の暗殺事件を何という？",answer:"サラエボ事件",accept:["サラエボ事件","サラエヴォ事件"],explain:"オーストリア皇位継承者夫妻がサラエボで暗殺され、第一次世界大戦が始まった。"},
+      {q:"1919年に結ばれた、第一次世界大戦の講和条約は？",answer:"ベルサイユ条約",accept:["ベルサイユ条約","ヴェルサイユ条約"],explain:"ドイツに巨額の賠償金と軍備制限を課した。"},
+      {q:"1929年にアメリカから始まり世界中に広がった不況を何という？",answer:"世界恐慌",accept:["世界恐慌","世界大恐慌"],explain:"ニューヨークの株価大暴落をきっかけに各国へ波及した。"},
+      {q:"日本が満州事変への国際的批判を受け、1933年に脱退した国際機関は？",answer:"国際連盟",accept:["国際連盟","連盟"],explain:"リットン調査団の報告を不服として脱退し、国際的に孤立していった。"},
+      {q:"1945年8月6日に世界で初めて原子爆弾が投下された都市は？",choices:["東京","広島","長崎","大阪"],answer:"広島",accept:["広島"],explain:"8月6日広島、8月9日長崎に原子爆弾が投下された。"},
+      {q:"日本が無条件降伏を受け入れた、1945年の連合国の宣言は？",answer:"ポツダム宣言",accept:["ポツダム宣言"],explain:"1945年8月14日に受諾、15日に終戦を国民に伝えた（玉音放送）。"},
+      {q:"日本国憲法の三大原則のうち、戦争放棄を定めた条文は第何条？",choices:["第1条","第9条","第25条","第99条"],answer:"第9条",accept:["第9条"],explain:"第9条は戦争放棄・戦力不保持・交戦権の否認を定める。"},
+      {q:"1956年の日ソ共同宣言の後、日本が加盟を認められた国際機関は？",answer:"国際連合",accept:["国際連合","国連"],explain:"ソ連の支持が得られ、1956年に国際連合へ加盟した。"},
+    ]},
+  { name:"数学", icon:"📐", month:7, day:3,
+    scope:"教科書 P12〜P56 ／ ワーク P4〜P43 ／ 単元テスト「多項式」（展開・因数分解・根号を含む数）",
+    submit:"",
+    advice:"ワーク・教科書を繰り返し解き直す。展開/因数分解/根号の計算＋証明など応用にも挑戦。",
+    problems:[
+      {q:"(x+3)(x-5) を展開せよ",answer:"x²-2x-15",accept:["x^2-2x-15","x²-2x-15"],explain:"x²+(3-5)x+(3×-5)=x²-2x-15。"},
+      {q:"(2x+1)² を展開せよ",answer:"4x²+4x+1",accept:["4x^2+4x+1","4x²+4x+1"],explain:"(a+b)²=a²+2ab+b²。(2x)²+2·2x·1+1²=4x²+4x+1。"},
+      {q:"x²+7x+12 を因数分解せよ",answer:"(x+3)(x+4)",accept:["(x+3)(x+4)","(x+4)(x+3)"],explain:"かけて12・たして7 → 3と4。"},
+      {q:"x²-9 を因数分解せよ",answer:"(x+3)(x-3)",accept:["(x+3)(x-3)","(x-3)(x+3)"],explain:"a²-b²=(a+b)(a-b) の公式。"},
+      {q:"√12 を a√b の形に簡単にせよ",answer:"2√3",accept:["2√3","2ルート3"],explain:"√12=√(4×3)=2√3。"},
+      {q:"√50 - √18 を計算せよ",answer:"2√2",accept:["2√2","2ルート2"],explain:"5√2-3√2=2√2。"},
+      {q:"(√3+1)(√3-1) を計算せよ",answer:"2",accept:["2"],explain:"(a+b)(a-b)=a²-b² → 3-1=2。"},
+      {q:"6/√2 の分母を有理化せよ",answer:"3√2",accept:["3√2","3ルート2"],explain:"6/√2 = 6√2/2 = 3√2。"},
+    ]},
+  { name:"国語", icon:"✍️", month:7, day:6,
+    scope:"『握手』『俳句の世界』『和語・漢語・外来語』ほか ／ 範囲の漢字 ／ これまでの小テスト",
+    submit:"ワーク P6〜47",
+    advice:"教科書を読み直し、授業・家庭学習プリントを復習。漢字の読み書きを確実に。",
+    problems:[
+      {q:"小説『握手』の作者は誰？",answer:"井上ひさし",accept:["井上ひさし"],explain:"ルロイ修道士との交流を描いた井上ひさしの作品。"},
+      {q:"俳句で、季節を表すために詠み込む言葉を何という？",answer:"季語",accept:["季語"],explain:"1つの俳句に季語は原則1つ（季重なりに注意）。"},
+      {q:"俳句の基本の音数（リズム）は？",choices:["五・七・五","五・七・五・七・七","七・五調","五・五・七"],answer:"五・七・五",accept:["五・七・五","5-7-5","五七五"],explain:"五・七・五の十七音が基本。字余り・字足らずもある。"},
+      {q:"次のうち「外来語」はどれ？",choices:["山（やま）","登山（とざん）","ピアノ","手紙"],answer:"ピアノ",accept:["ピアノ"],explain:"和語=訓読み中心、漢語=音読み中心、外来語=主に欧米から入った語（カタカナ）。"},
+      {q:"「山（やま）」のように訓読みで読む、日本固有の言葉の種類は？",answer:"和語",accept:["和語","やまとことば"],explain:"和語は訓読み、漢語は音読みが基本。"},
+      {q:"漢字の読みを答えよ：「貢献」",answer:"こうけん",accept:["こうけん"],explain:"「貢献（こうけん）」＝役に立つように力をつくすこと。"},
+      {q:"漢字の読みを答えよ：「拍手」",answer:"はくしゅ",accept:["はくしゅ"],explain:"「拍手（はくしゅ）」。"},
+      {q:"ひらがなを漢字に直せ：「ちんもく」",answer:"沈黙",accept:["沈黙"],explain:"「沈黙（ちんもく）」＝だまっていること。"},
+    ]},
+  { name:"英語", icon:"🔤", month:7, day:10,
+    scope:"教科書 P8〜P37 ／ ワーク P4〜P37（P35を除く）",
+    submit:"ワーク提出：7/10(金)（テスト終了後に回収）",
+    advice:"ワークを何回も解き直す。対話文（AさんBさんの文）を確認する。",
+    problems:[
+      {q:"現在完了「すでに〜した」：I have ( ) finished my homework.",choices:["already","yet","ago","since"],answer:"already",accept:["already"],explain:"肯定文の「すでに」は already。yet は疑問・否定で使う。"},
+      {q:"経験：Have you ever ( ) Kyoto?",choices:["visit","visits","visited","visiting"],answer:"visited",accept:["visited"],explain:"現在完了は have/has + 過去分詞。visit-visited-visited。"},
+      {q:"継続：She ( ) lived here for ten years.",choices:["have","has","is","had"],answer:"has",accept:["has"],explain:"主語 She（3人称単数）なので has。"},
+      {q:"関係代名詞：This is the book ( ) I bought yesterday.",choices:["who","which","what","whose"],answer:"which",accept:["which"],explain:"先行詞が物（the book）で目的格なので which（that も可）。"},
+      {q:"受け身：This temple ( ) built 500 years ago.",choices:["is","was","has","did"],answer:"was",accept:["was"],explain:"過去の受け身は was/were + 過去分詞。"},
+      {q:"現在完了の継続で「〜の間」を表すのは？",choices:["for","since","during","while"],answer:"for",accept:["for"],explain:"for＋期間（for ten years）、since＋起点（since 2010）。"},
+      {q:"日本語にせよ：I have just arrived at the station.",answer:"私はちょうど駅に着いたところだ",accept:["ちょうど駅に着いたところ","ちょうど駅についたところ","私はちょうど駅に着いたところだ"],explain:"完了用法 have just + 過去分詞＝「ちょうど〜したところ」。"},
+    ]},
+  { name:"理科", icon:"🔬", month:7, day:13,
+    scope:"教科書 P6〜83（単元：運動とエネルギー）／ ワーク P2〜33",
+    submit:"ワーク提出：7/1(水)（丸付け・訂正まで／教科連絡係が回収）",
+    advice:"教科書・ノートを見直す。作図や計算問題は必ず出る。ワークを何回も解き直す。",
+    problems:[
+      {q:"一直線上を一定の速さで進む運動を何という？",answer:"等速直線運動",accept:["等速直線運動"],explain:"力がはたらかない（つり合う）とき、物体は等速直線運動を続ける。"},
+      {q:"物体がそのままの運動を続けようとする性質に関する法則を何という？",answer:"慣性の法則",accept:["慣性の法則","慣性"],explain:"外から力がはたらかなければ、静止は静止、運動は等速直線運動を続ける。"},
+      {q:"仕事の単位は？",choices:["N","J","W","Pa"],answer:"J",accept:["j","ジュール"],explain:"仕事〔J〕＝力〔N〕×力の向きに動いた距離〔m〕。"},
+      {q:"100Nの物体を2m持ち上げたときの仕事は何J？",answer:"200J",accept:["200","200j"],explain:"仕事＝100N×2m＝200J。"},
+      {q:"一定時間あたりにする仕事の量（仕事率）の単位は？",choices:["N","J","W","m/s"],answer:"W",accept:["w","ワット"],explain:"仕事率〔W〕＝仕事〔J〕÷時間〔s〕。"},
+      {q:"高い位置にある物体がもつエネルギーを何という？",answer:"位置エネルギー",accept:["位置エネルギー"],explain:"高さが高いほど、質量が大きいほど大きい。"},
+      {q:"位置エネルギーと運動エネルギーの和を何という？",answer:"力学的エネルギー",accept:["力学的エネルギー"],explain:"摩擦などがなければ一定に保たれる（力学的エネルギー保存の法則）。"},
+      {q:"120kmを2時間で進んだときの平均の速さは時速何km？",answer:"60km/h",accept:["60","60km/h","時速60km","60km"],explain:"速さ＝距離÷時間＝120÷2＝60km/h。"},
+    ]},
+];
+const SUBMIT_DUES=[{m:7,d:1,t:"理科ワーク提出（7/1 水・丸付け＆訂正まで）"},{m:6,d:29,t:"社会ワーク提出（6/29 月）"},{m:7,d:10,t:"英語ワーク提出（7/10 金・テスト後回収）"}];
+const WD=["日","月","火","水","木","金","土"];
+
+// ============ 日付ユーティリティ ============
+function today(){const n=new Date();const s=new Date(2026,5,13);return n<s?s:n;}
+function testDate(s){return new Date(2026,s.month-1,s.day);}
+function dayDiff(a,b){return Math.round((stripTime(b)-stripTime(a))/86400000);}
+function stripTime(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
+function fmt(d){return (d.getMonth()+1)+"/"+d.getDate();}
+function sameDay(a,b){return stripTime(a).getTime()===stripTime(b).getTime();}
+
+function nextTest(t){
+  let best=null,name="";
+  for(const s of SUBJECTS){const td=testDate(s);if(td<stripTime(t))continue;if(!best||td<best){best=td;name=s.name;}}
+  if(!best)return null;
+  return {name,days:dayDiff(t,best)};
+}
+
+// ============ スケジュール生成（Go版の移植） ============
+function phaseDetail(s,daysUntil){
+  if(daysUntil<=2)return"総仕上げ：暗記の最終確認＋単元テスト/ワークの間違い直し";
+  if(daysUntil<=6)return"問題演習：ワークを2周目、間違えた問題を中心に解き直し";
+  return"基礎固め：教科書を読み直し＋ワークを1周";
+}
+function remindersFor(d){
+  const out=[];
+  for(const due of SUBMIT_DUES){const dd=dayDiff(d,new Date(2026,due.m-1,due.d));
+    if(dd>=0&&dd<=3)out.push(dd===0?("★本日提出: "+due.t):("提出まであと"+dd+"日: "+due.t));}
+  return out;
+}
+function genSchedule(start){
+  const subs=[...SUBJECTS].sort((a,b)=>testDate(a)-testDate(b));
+  const last=testDate(subs[subs.length-1]);
+  const plans=[];
+  for(let d=stripTime(start);d<=last;d=new Date(d.getTime()+86400000)){
+    const plan={date:new Date(d),tasks:[],reminders:remindersFor(d),testToday:""};
+    for(const s of subs)if(sameDay(testDate(s),d))plan.testToday=s.name;
+    const up=subs.filter(s=>testDate(s)>=stripTime(d));
+    if(up.length===0){plans.push(plan);continue;}
+    const wd=d.getDay();let budget=(wd===0||wd===6)?120:60;
+    const next=up[0];const du=dayDiff(d,testDate(next));
+    if(du<=2){plan.tasks.push({subject:next.name,min:budget,detail:phaseDetail(next,du)});}
+    else if(up.length>=2){const p=Math.floor(budget*2/3);const sec=up[1];
+      plan.tasks.push({subject:next.name,min:p,detail:phaseDetail(next,du)});
+      plan.tasks.push({subject:sec.name,min:budget-p,detail:phaseDetail(sec,dayDiff(d,testDate(sec)))});}
+    else{plan.tasks.push({subject:next.name,min:budget,detail:phaseDetail(next,du)});}
+    plans.push(plan);
+  }
+  return plans;
+}
+
+// ============ 答え合わせ ============
+function normalize(s){
+  s=(s||"").trim();let out="";
+  for(const ch of s){const c=ch.codePointAt(0);
+    if(c>=0xFF10&&c<=0xFF19)out+=String.fromCharCode(c-0xFF10+48);
+    else if(c>=0xFF21&&c<=0xFF3A)out+=String.fromCharCode(c-0xFF21+65);
+    else if(c>=0xFF41&&c<=0xFF5A)out+=String.fromCharCode(c-0xFF41+97);
+    else if(ch==="　"||ch===" "){}
+    else if(ch==="＾")out+="^"; else if(ch==="×")out+="*";
+    else if(ch==="²")out+="^2"; else if(ch==="³")out+="^3";
+    else out+=ch;
+  }
+  return out.toLowerCase();
+}
+function isCorrect(p,input){
+  const n=normalize(input);if(!n)return false;
+  const acc=(p.accept&&p.accept.length)?p.accept:[p.answer];
+  return acc.some(a=>normalize(a)===n);
+}
+
+// ============ 画面描画 ============
+const app=document.getElementById("app");
+function setCountdown(){
+  const nt=nextTest(today());const el=document.getElementById("countdown");
+  if(!nt){el.innerHTML="🎉 テストはすべて終了！";return;}
+  el.innerHTML = nt.days===0 ? ("今日は <b>"+nt.name+"</b> のテスト本番！")
+    : ("次のテスト：<b>"+nt.name+"</b> まで あと <b>"+nt.days+"</b> 日");
+}
+
+function home(){
+  setCountdown();
+  app.innerHTML=`
+    <div class="grid">
+      <div class="tile" onclick="viewToday()"><div class="ic">📅</div><div class="lb">今日やること</div><div class="sub">きょうの勉強プラン</div></div>
+      <div class="tile" onclick="viewQuizSelect()"><div class="ic">✏️</div><div class="lb">問題集に挑戦</div><div class="sub">クイズで力だめし</div></div>
+      <div class="tile" onclick="viewScope()"><div class="ic">📖</div><div class="lb">テスト範囲</div><div class="sub">範囲と提出物</div></div>
+      <div class="tile" onclick="viewTips()"><div class="ic">💡</div><div class="lb">点数アップ</div><div class="sub">勉強のコツ</div></div>
+    </div>`;
+}
+function backBtn(){return `<button class="back" onclick="home()">← メニューにもどる</button>`;}
+
+function viewToday(){
+  const plans=genSchedule(today());const t=today();
+  let body="";
+  const todayPlan=plans.find(p=>sameDay(p.date,t));
+  if(todayPlan){
+    body+=`<div class="card"><h2 class="sec">📅 今日 ${fmt(t)}(${WD[t.getDay()]}) やること</h2>`;
+    if(todayPlan.testToday)body+=`<p><span class="test-badge">★ テスト本番：${todayPlan.testToday}</span></p>`;
+    if(todayPlan.tasks.length===0)body+=`<p>予定なし（おつかれさま！）</p>`;
+    for(const tk of todayPlan.tasks)body+=`<p class="task">・${tk.subject} <span class="min">${tk.min}分</span> … ${tk.detail}</p>`;
+    for(const r of todayPlan.reminders)body+=`<p class="rem">⚠ ${r}</p>`;
+    body+=`</div>`;
+  } else body+=`<div class="card"><p>今日の予定はありません（テスト期間外、または全テスト終了）。</p></div>`;
+  // 全日程
+  body+=`<h2 class="sec">🗓 これからの全日程</h2><div class="card">`;
+  for(const p of plans){
+    if(p.date<stripTime(t))continue;
+    body+=`<div class="day"><div class="d">${fmt(p.date)}(${WD[p.date.getDay()]})${p.testToday?` <span class="test-badge">本番：${p.testToday}</span>`:""}</div>`;
+    for(const tk of p.tasks)body+=`<div class="task">・${tk.subject} <span class="min">${tk.min}分</span> … ${tk.detail}</div>`;
+    for(const r of p.reminders)body+=`<div class="rem">⚠ ${r}</div>`;
+    body+=`</div>`;
+  }
+  body+=`</div>`;
+  app.innerHTML=backBtn()+body;
+}
+
+function viewScope(){
+  let body=`<h2 class="sec">📖 テスト範囲・提出物</h2><div class="card">`;
+  for(const s of SUBJECTS){
+    body+=`<div style="margin:10px 0 14px">
+      <div class="scope-h"><span class="em">${s.icon}</span>${s.name}（${s.month}/${s.day} 実施）</div>
+      <div class="scope-meta">範囲: ${s.scope}</div>
+      ${s.submit?`<div class="scope-meta">提出: ${s.submit}</div>`:""}
+      <div class="scope-meta">助言: ${s.advice}</div></div>`;
+  }
+  body+=`</div>`;
+  app.innerHTML=backBtn()+body;
+}
+
+function viewTips(){
+  const tips=[
+    "ワークは2周＋間違い直し。これが一番点になる。",
+    "提出物は締切前に終わらせる（社会6/29・理科7/1・英語7/10）。",
+    "間違えた問題はノートに集めて、前日に見返す。",
+    "25分集中＋5分休憩。スマホは別の部屋に。",
+    "数学・理科は途中式と単位を必ず書く（ミス防止）。",
+    "英語は対話文を音読して暗唱、不規則動詞は毎日5個。",
+    "国語は漢字で確実に得点（読み書き両方）。",
+  ];
+  let body=`<h2 class="sec">💡 点数アップのコツ</h2><div class="card">`;
+  tips.forEach((t,i)=>{body+=`<div class="tip"><div class="n">${i+1}</div><div>${t}</div></div>`;});
+  body+=`</div>`;
+  app.innerHTML=backBtn()+body;
+}
+
+function viewQuizSelect(){
+  const t=today();
+  let body=`<h2 class="sec">✏️ どの教科に挑戦する？</h2><div class="subj-list">`;
+  SUBJECTS.forEach((s,i)=>{
+    const du=dayDiff(t,testDate(s));
+    const dl=du>=0?`${s.month}/${s.day}・あと${du}日`:`${s.month}/${s.day}・終了`;
+    body+=`<div class="subj" onclick="startQuiz(${i})"><div class="ic">${s.icon}</div>
+      <div><div class="nm">${s.name}</div><div class="dl">${dl}</div></div></div>`;
+  });
+  body+=`<div class="subj full" onclick="startQuiz(-1)"><div class="ic">🎯</div><div class="nm">全教科とおして挑戦</div></div>`;
+  body+=`</div>`;
+  app.innerHTML=backBtn()+body;
+}
+
+// ============ クイズ進行 ============
+let QZ=null;
+function startQuiz(idx){
+  let items=[];
+  if(idx===-1){for(const s of SUBJECTS)for(const p of s.problems)items.push({subject:s.name,icon:s.icon,p});}
+  else{const s=SUBJECTS[idx];for(const p of s.problems)items.push({subject:s.name,icon:s.icon,p});}
+  QZ={items,i:0,correct:0,answered:false};
+  renderQuestion();
+}
+function renderQuestion(){
+  const {items,i}=QZ;
+  if(i>=items.length){return renderResult();}
+  const it=items[i];const p=it.p;
+  let body=backBtn();
+  body+=`<div class="card">
+    <div class="qhead"><span>${it.icon} ${it.subject}</span><span>第 ${i+1} / ${items.length} 問</span></div>
+    <div class="prog"><i style="width:${(i/items.length)*100}%"></i></div>
+    <div class="qtext">${p.q}</div>`;
+  if(p.choices&&p.choices.length){
+    body+=`<div class="choices" id="choices">`;
+    p.choices.forEach((c,ci)=>{body+=`<button class="choice" onclick="answerChoice(${ci})">${c}</button>`;});
+    body+=`</div>`;
+  }else{
+    body+=`<div class="answerbox"><input id="ans" type="text" placeholder="答えを入力" autocomplete="off">
+      <button class="btn" onclick="answerText()">こたえる</button></div>`;
+  }
+  body+=`<div id="result"></div>`;
+  body+=`</div>`;
+  app.innerHTML=body;
+  const inp=document.getElementById("ans");
+  if(inp){inp.focus();inp.addEventListener("keydown",e=>{if(e.key==="Enter")answerText();});}
+}
+function showVerdict(ok){
+  const it=QZ.items[QZ.i];const p=it.p;
+  if(ok)QZ.correct++;
+  const r=document.getElementById("result");
+  r.innerHTML=`<div class="verdict ${ok?'ok':'ng'}">${ok?"⭕ 正解！":"❌ 不正解… 正解は「"+p.answer+"」"}</div>
+    ${p.explain?`<div class="explain">💡 ${p.explain}</div>`:""}
+    <div class="next"><button class="btn" onclick="nextQuestion()">${QZ.i+1>=QZ.items.length?"結果を見る →":"次の問題 →"}</button></div>`;
+  QZ.answered=true;
+}
+function answerChoice(ci){
+  if(QZ.answered)return;
+  const it=QZ.items[QZ.i];const p=it.p;
+  const ok=normalize(p.choices[ci])===normalize(p.answer);
+  const btns=document.querySelectorAll("#choices .choice");
+  btns.forEach((b,bi)=>{
+    b.style.pointerEvents="none";
+    if(normalize(p.choices[bi])===normalize(p.answer))b.classList.add("correct");
+    else if(bi===ci&&!ok)b.classList.add("wrong");
+  });
+  showVerdict(ok);
+}
+function answerText(){
+  if(QZ.answered)return;
+  const it=QZ.items[QZ.i];const p=it.p;
+  const v=document.getElementById("ans").value;
+  document.getElementById("ans").disabled=true;
+  showVerdict(isCorrect(p,v));
+}
+function nextQuestion(){QZ.i++;QZ.answered=false;renderQuestion();}
+function renderResult(){
+  const {items,correct}=QZ;const pct=Math.round(correct/items.length*100);
+  let msg;
+  if(correct===items.length)msg="🎉 全問正解！この調子で本番もいける！";
+  else if(pct>=80)msg="👍 よくできています。間違えた問題だけもう一度！";
+  else msg="📚 間違えた問題は解説を読んで、明日また挑戦しよう。";
+  app.innerHTML=backBtn()+`<div class="card score">
+    <div class="big">${correct} / ${items.length}</div>
+    <div>正答率 ${pct}%</div><div class="msg">${msg}</div>
+    <div style="margin-top:18px"><button class="btn" onclick="viewQuizSelect()">もう一度えらぶ</button></div>
+  </div>`;
+}
+
+home();
+</script>
+</body>
+</html>

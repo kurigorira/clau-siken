@@ -37,6 +37,8 @@ func main() {
 		printScope()
 	case "menu", "m":
 		RunMenu(reader)
+	case "serve", "web", "ui":
+		Serve()
 	default:
 		printHelp()
 	}
@@ -59,6 +61,7 @@ func printHelp() {
 
 使い方:
   go run .              対話メニュー（番号を選ぶだけ・おすすめ）
+  go run . serve        Web版（アイコンで操作する画面）をブラウザで開く
   go run . schedule     学習スケジュールを表示
   go run . scope        各教科のテスト範囲・提出物を表示
   go run . quiz [教科]   問題集に挑戦（社会/数学/国語/英語/理科。省略で全教科）
