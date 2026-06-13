@@ -8,6 +8,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'config/**' # 学習設定の保存ではサイトを再ビルドしない
   schedule:
     - cron: '5 15 * * *' # 毎日 00:05 JST に公開状態を見直す
   workflow_dispatch:

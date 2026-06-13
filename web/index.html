@@ -192,11 +192,53 @@ const WD=["日","月","火","水","木","金","土"];
 // STORE = { subjects:{教科名:{testDate,submitDate,scope,submit,advice}}, settings:{weekdayMin,weekendMin}, days:{ISO日付:{note,plan}} }
 const STORE_KEY="saiya_study_v1";
 function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){return{};}}
-function saveStore(){localStorage.setItem(STORE_KEY,JSON.stringify(STORE));}
+function saveStore(){localStorage.setItem(STORE_KEY,JSON.stringify(STORE));cloudAutoPush();}
 let STORE=loadStore();
 STORE.subjects=STORE.subjects||{};
 STORE.settings=Object.assign({weekdayMin:60,weekendMin:120},STORE.settings||{});
 STORE.days=STORE.days||{};
+
+// ============ クラウド同期（GitHubのconfig/data.jsonに保存）============
+// 各端末で「鍵(トークン)」を1回設定すれば、起動時に自動取得・保存時に自動アップロードして
+// どの端末でも同じ状態になる。読み取りは公開リポジトリなので鍵なしでも可能。
+const GH={owner:"kurigorira",repo:"clau-siken",path:"config/data.json",branch:"main"};
+const TOKEN_KEY="saiya_gh_token";
+let CLOUD_SHA=null;          // 更新に必要な現在ファイルのSHA
+let CLOUD_BUSY=false;        // 二重送信防止
+function ghToken(){return localStorage.getItem(TOKEN_KEY)||"";}
+function b64encode(str){const bytes=new TextEncoder().encode(str);let bin="";bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin);}
+function b64decode(b64){const bin=atob((b64||"").replace(/\n/g,""));return new TextDecoder().decode(Uint8Array.from(bin,c=>c.charCodeAt(0)));}
+function normalizeStore(o){return {subjects:o.subjects||{},settings:Object.assign({weekdayMin:60,weekendMin:120},o.settings||{}),days:o.days||{}};}
+
+async function cloudGet(){
+  const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.path}?ref=${GH.branch}&_=${Date.now()}`;
+  const h={"Accept":"application/vnd.github+json"};const t=ghToken();if(t)h.Authorization="Bearer "+t;
+  const res=await fetch(url,{headers:h,cache:"no-store"});
+  if(res.status===404){CLOUD_SHA=null;return null;}
+  if(!res.ok)throw new Error("GET "+res.status);
+  const j=await res.json();CLOUD_SHA=j.sha;return JSON.parse(b64decode(j.content));
+}
+async function cloudPull(){
+  try{const data=await cloudGet();if(data){STORE=normalizeStore(data);localStorage.setItem(STORE_KEY,JSON.stringify(STORE));return true;}}
+  catch(e){/* オフライン等はローカルの内容を使う */}
+  return false;
+}
+async function cloudPush(){
+  const t=ghToken();if(!t)throw new Error("no-token");
+  try{await cloudGet();}catch(e){} // 競合回避のため最新SHAを取得
+  const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.path}`;
+  const body={message:"勉強設定を更新",content:b64encode(JSON.stringify(STORE,null,1)),branch:GH.branch};
+  if(CLOUD_SHA)body.sha=CLOUD_SHA;
+  const res=await fetch(url,{method:"PUT",headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer "+t,"Content-Type":"application/json"},body:JSON.stringify(body)});
+  if(!res.ok)throw new Error("PUT "+res.status);
+  const j=await res.json();CLOUD_SHA=j.content.sha;
+}
+// 保存時に鍵があれば自動でアップロード
+function cloudAutoPush(){
+  if(!ghToken()||CLOUD_BUSY)return;
+  CLOUD_BUSY=true;
+  cloudPush().then(()=>toast("クラウドに保存しました")).catch(()=>toast("クラウド保存に失敗（鍵を確認）")).finally(()=>{CLOUD_BUSY=false;});
+}
 
 // 既定値に編集内容を重ねた「実際に使う教科リスト」を返す
 function getSubjects(){
@@ -326,7 +368,7 @@ function home(){
       <div class="tile" onclick="viewScope()"><div class="ic">📖</div><div class="lb">テスト範囲</div><div class="sub">範囲と提出物</div></div>
       <div class="tile" onclick="viewTips()"><div class="ic">💡</div><div class="lb">点数アップ</div><div class="sub">勉強のコツ</div></div>
       <div class="tile" onclick="viewEdit()"><div class="ic">⚙️</div><div class="lb">編集</div><div class="sub">範囲・提出物・予定</div></div>
-      <div class="tile" onclick="viewBackup()"><div class="ic">💾</div><div class="lb">バックアップ</div><div class="sub">書き出し・読み込み</div></div>
+      <div class="tile" onclick="viewSync()"><div class="ic">☁️</div><div class="lb">クラウド同期</div><div class="sub">どの端末でも同じに</div></div>
     </div>`;
 }
 
@@ -476,25 +518,64 @@ function resetAll(){
   saveStore();toast("初期状態に戻しました");home();
 }
 
-// ============ バックアップ ============
-function viewBackup(){
+// ============ クラウド同期 ＋ バックアップ ============
+function viewSync(){
+  const hasTok=!!ghToken();
   app.innerHTML=backBtn()+`
-    <h2 class="sec">💾 バックアップ（他の端末へ移す）</h2>
+    <h2 class="sec">☁️ クラウド同期（どの端末でも同じ状態に）</h2>
     <div class="card">
-      <p class="hint">編集内容はこの端末のブラウザに保存されています。下の文字列をコピーして保存すれば、別の端末の「読み込み」に貼り付けて同じ設定を再現できます。</p>
+      <p class="hint">設定すると、編集内容がこのサイトの保存先（GitHub）に保存され、<b>どの端末でも起動時に最新が読み込まれ、保存時に自動でアップロード</b>されます。読み込みは鍵なしでも自動。<b>編集して全端末へ反映するには、各端末で下の「鍵」を1回だけ設定</b>してください。</p>
+      <div class="field">
+        <label>GitHubの鍵（トークン）— 状態：${hasTok?"✅ 設定済み":"未設定"}</label>
+        <input id="gh_tok" type="password" placeholder="github_pat_... を貼り付け">
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="saveToken()">鍵を保存</button>
+        <button class="btn ghost sm" onclick="clearToken()">鍵を消す</button>
+      </div>
+      <div class="actions" style="margin-top:14px">
+        <button class="btn sub" onclick="manualPull()">⬇ クラウドから取得</button>
+        <button class="btn sub" onclick="manualPush()">⬆ クラウドに保存</button>
+      </div>
+      <div class="hint" style="margin-top:14px">
+        <b>鍵の作り方（1回だけ）：</b><br>
+        ① <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a> を開く<br>
+        ② Repository access →「Only select repositories」で <b>clau-siken</b> を選ぶ<br>
+        ③ Permissions → Repository permissions → <b>Contents</b> を <b>Read and write</b> に<br>
+        ④ Generate して表示された <b>github_pat_…</b> をコピーし、上に貼って「鍵を保存」<br>
+        ※鍵はこの端末のブラウザにだけ保存されます。GitHubの設定からいつでも取り消せます。
+      </div>
+    </div>
+
+    <h2 class="sec">💾 手動バックアップ（鍵を使わない方法）</h2>
+    <div class="card">
+      <p class="hint">鍵を使わず、コピー＆貼り付けで別端末へ移すこともできます。</p>
       <div class="field"><label>書き出し（この内容をコピー）</label><textarea id="bk_out" readonly></textarea></div>
       <div class="actions"><button class="btn sub sm" onclick="copyBackup()">コピー</button></div>
       <div class="field" style="margin-top:18px"><label>読み込み（コピーした内容を貼り付け）</label><textarea id="bk_in" placeholder="ここに貼り付け"></textarea></div>
-      <div class="actions"><button class="btn" onclick="importBackup()">読み込む</button><button class="btn ghost" onclick="home()">もどる</button></div>
+      <div class="actions"><button class="btn sm" onclick="importBackup()">読み込む</button><button class="btn ghost sm" onclick="home()">もどる</button></div>
     </div>`;
   document.getElementById("bk_out").value=JSON.stringify(STORE);
 }
+function saveToken(){
+  const v=document.getElementById("gh_tok").value.trim();
+  if(v){localStorage.setItem(TOKEN_KEY,v);toast("鍵を保存しました");cloudAutoPush();}
+  else{toast("鍵が空です");}
+  viewSync();
+}
+function clearToken(){localStorage.removeItem(TOKEN_KEY);toast("鍵を消しました");viewSync();}
+async function manualPush(){
+  if(!ghToken()){toast("先に鍵を設定してください");return;}
+  toast("保存中…");
+  try{await cloudPush();toast("クラウドに保存しました");}catch(e){toast("保存に失敗（鍵/権限を確認）");}
+}
+async function manualPull(){toast("取得中…");const ok=await cloudPull();toast(ok?"クラウドから取得しました":"取得できませんでした");home();}
 function copyBackup(){const el=document.getElementById("bk_out");el.select();
   try{navigator.clipboard.writeText(el.value);}catch(e){document.execCommand("copy");}toast("コピーしました");}
 function importBackup(){
   const v=document.getElementById("bk_in").value.trim();if(!v){toast("貼り付けてください");return;}
   try{const obj=JSON.parse(v);
-    STORE={subjects:obj.subjects||{},settings:Object.assign({weekdayMin:60,weekendMin:120},obj.settings||{}),days:obj.days||{}};
+    STORE=normalizeStore(obj);
     saveStore();toast("読み込みました");home();
   }catch(e){toast("読み込めませんでした（内容を確認）");}
 }
@@ -596,7 +677,13 @@ function renderResult(){
   </div>`;
 }
 
-home();
+// 起動：まずローカルの内容で即表示し、続けてクラウドから最新を取得して反映
+async function initApp(){
+  home();
+  const ok=await cloudPull();
+  if(ok){setCountdown();if(document.querySelector(".grid"))home();}
+}
+initApp();
 </script>
 </body>
 </html>
