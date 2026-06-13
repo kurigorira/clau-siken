@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"strings"
 )
 
@@ -51,8 +50,8 @@ func isCorrect(p Problem, in string) bool {
 }
 
 // RunQuiz は対象教科のクイズを対話形式で実行する。filter が空なら全教科。
-func RunQuiz(subjects []Subject, filter string) {
-	reader := bufio.NewReader(os.Stdin)
+// reader は標準入力などの読み取り元（メニューと共有して使う）。
+func RunQuiz(subjects []Subject, filter string, reader *bufio.Reader) {
 	grandTotal, grandCorrect := 0, 0
 
 	for _, s := range subjects {

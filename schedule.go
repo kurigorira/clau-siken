@@ -136,6 +136,52 @@ func sameDay(a, b time.Time) bool {
 	return a.Year() == b.Year() && a.YearDay() == b.YearDay()
 }
 
+// NextTest は today 以降で最も近いテストの教科名と残り日数を返す。
+// すべて終了していれば ok=false。
+func NextTest(subjects []Subject, today time.Time) (name string, daysLeft int, ok bool) {
+	best := time.Time{}
+	for _, s := range subjects {
+		if s.TestDate.Before(startOfDay(today)) {
+			continue
+		}
+		if best.IsZero() || s.TestDate.Before(best) {
+			best, name = s.TestDate, s.Name
+		}
+	}
+	if best.IsZero() {
+		return "", 0, false
+	}
+	return name, int(best.Sub(startOfDay(today)).Hours() / 24), true
+}
+
+func startOfDay(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+}
+
+// PrintToday は today 1日分の計画を表示する。
+func PrintToday(plans []DayPlan, today time.Time) {
+	for _, p := range plans {
+		if sameDay(p.Date, today) {
+			wd := weekdayJP[int(p.Date.Weekday())]
+			fmt.Printf("──── 今日 %s(%s) やること ────\n", p.Date.Format("1/2"), wd)
+			if p.TestToday != "" {
+				fmt.Printf("  ★★ テスト本番：%s ★★\n", p.TestToday)
+			}
+			if len(p.Tasks) == 0 {
+				fmt.Println("  予定なし（おつかれさま！）")
+			}
+			for _, t := range p.Tasks {
+				fmt.Printf("  ・%s %d分 … %s\n", t.Subject, t.Minutes, t.Detail)
+			}
+			for _, r := range p.Reminders {
+				fmt.Printf("  ⚠ %s\n", r)
+			}
+			return
+		}
+	}
+	fmt.Println("今日の予定はありません（テスト期間外、または全テスト終了）。")
+}
+
 // PrintSchedule は計画を見やすく出力する。
 func PrintSchedule(plans []DayPlan) {
 	fmt.Println("==================================================")

@@ -1,43 +1,42 @@
 // saiya-study は才弥さんの期末テスト対策用CLIツール。
 //
-// 使い方:
+// 引数なしで起動すると、番号を選んで進める対話メニューになる。
 //
+//	go run .                 対話メニュー（おすすめ）
 //	go run . schedule        学習スケジュールを表示
-//	go run . quiz            全教科の問題集に挑戦
-//	go run . quiz 数学        教科を指定して問題集に挑戦
+//	go run . quiz [教科]      問題集に挑戦（教科を省くと全教科）
 //	go run . scope           各教科のテスト範囲・提出物を表示
-//	go run .                 ヘルプを表示
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
-	"time"
 )
 
 func main() {
+	reader := bufio.NewReader(os.Stdin)
 	args := os.Args[1:]
-	cmd := "help"
-	if len(args) > 0 {
-		cmd = args[0]
+
+	// 引数なし → 対話メニュー
+	if len(args) == 0 {
+		RunMenu(reader)
+		return
 	}
 
-	switch cmd {
+	switch args[0] {
 	case "schedule", "s":
-		// 今日(またはテスト範囲の起点)から計画を生成。
-		start := time.Now()
-		if start.Before(date(6, 13)) {
-			start = date(6, 13)
-		}
-		PrintSchedule(GenerateSchedule(Subjects, start))
+		PrintSchedule(GenerateSchedule(Subjects, studyStart()))
 	case "quiz", "q":
 		filter := ""
 		if len(args) > 1 {
 			filter = args[1]
 		}
-		RunQuiz(Subjects, filter)
+		RunQuiz(Subjects, filter, reader)
 	case "scope":
 		printScope()
+	case "menu", "m":
+		RunMenu(reader)
 	default:
 		printHelp()
 	}
@@ -59,10 +58,10 @@ func printHelp() {
 	fmt.Println(`才弥さん 期末テスト対策ツール (saiya-study)
 
 使い方:
+  go run .              対話メニュー（番号を選ぶだけ・おすすめ）
   go run . schedule     学習スケジュールを表示
   go run . scope        各教科のテスト範囲・提出物を表示
-  go run . quiz         全教科の問題集に挑戦
-  go run . quiz 数学     教科を指定して挑戦（社会/数学/国語/英語/理科）
+  go run . quiz [教科]   問題集に挑戦（社会/数学/国語/英語/理科。省略で全教科）
 
 点数アップの作戦は docs/点数アップ施策.md を見てね。`)
 }
