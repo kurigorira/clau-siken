@@ -1,10 +1,15 @@
 # web/ フォルダを GitHub Pages に公開するワークフロー。
-# main ブランチへの push で自動デプロイされ、index.html がサイトのトップになる。
+#
+# 公開期限つき：DEADLINE までは通常のアプリを公開し、
+# 期限を過ぎると自動で「公開は終了しました」ページに切り替える。
+# 毎日 0時(JST) の定期実行で、push がなくても期限当日に自動で切り替わる。
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '5 15 * * *' # 毎日 00:05 JST に公開状態を見直す
   workflow_dispatch:
 
 permissions:
@@ -24,9 +29,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: 公開期限を判定して配信フォルダを準備
+        run: |
+          # ↓ この日まで公開（翌日から「公開終了」ページに自動で切り替え）
+          DEADLINE="2026-07-13"
+          TODAY=$(TZ=Asia/Tokyo date +%F)
+          mkdir -p _site
+          if [[ "$TODAY" > "$DEADLINE" ]]; then
+            echo "公開期限($DEADLINE)を過ぎたため『公開終了』ページを配信します（本日 $TODAY）"
+            cp web/closed.html _site/index.html
+          else
+            echo "公開中：アプリを配信します（本日 $TODAY ／ 期限 $DEADLINE）"
+            cp -r web/. _site/
+          fi
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
