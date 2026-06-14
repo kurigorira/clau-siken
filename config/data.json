@@ -1,1 +1,8 @@
-{"subjects":{},"settings":{"weekdayMin":60,"weekendMin":120},"days":{}}
+{
+ "subjects": {},
+ "settings": {
+  "weekdayMin": 60,
+  "weekendMin": 120
+ },
+ "days": {}
+}
