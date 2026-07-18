@@ -3,687 +3,304 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>才弥さん 期末テスト対策</title>
+<title>英検3級 単語トレーニング</title>
 <style>
   :root{
-    --bg:#f5f7fb; --card:#ffffff; --ink:#26303b; --muted:#7a8696;
-    --line:#e6eaf0; --accent:#4a7dff; --ok:#28c08a; --ng:#ff6b6b; --shadow:0 6px 20px rgba(40,60,90,.08);
+    --bg:#0f1524; --bg2:#141c30; --card:#1b2540; --ink:#eaf0ff; --muted:#93a1c4;
+    --line:#2a3556; --accent:#5b8cff; --accent2:#7c5cff; --ok:#2ee6a6; --ng:#ff6b81;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  @media (prefers-color-scheme: light){
+    :root{--bg:#eef2fb;--bg2:#ffffff;--card:#ffffff;--ink:#1c2440;--muted:#6a76a0;
+      --line:#e2e8f6;--accent:#4a6fff;--accent2:#7c5cff;--ok:#12b886;--ng:#f0546b;--shadow:0 8px 24px rgba(40,60,120,.12)}
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;
-    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
-  .wrap{max-width:760px;margin:0 auto;padding:18px 16px 60px}
-  header.top{text-align:center;padding:14px 0 6px}
-  header.top h1{font-size:1.25rem;margin:.2em 0}
-  .countdown{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;
-    padding:7px 16px;font-size:.95rem;box-shadow:var(--shadow);margin-top:4px}
-  .countdown b{color:var(--accent)}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
-  .tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 14px;
-    text-align:center;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s,box-shadow .15s}
-  .tile:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(40,60,90,.14)}
+    background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:18px 16px 70px}
+  header.top{text-align:center;padding:12px 0 2px}
+  header.top h1{font-size:1.3rem;margin:.1em 0;letter-spacing:.02em}
+  header.top .tag{color:var(--muted);font-size:.85rem}
+  /* 進捗 */
+  .overall{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;box-shadow:var(--shadow)}
+  .overall .lbl{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}
+  .bar{height:12px;border-radius:99px;background:rgba(130,150,200,.18);overflow:hidden;margin-top:8px}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width .4s}
+  /* メニュー */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:16px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 14px;text-align:center;
+    cursor:pointer;box-shadow:var(--shadow);transition:transform .08s,border-color .15s}
+  .tile:hover{transform:translateY(-2px);border-color:var(--accent)}
   .tile:active{transform:translateY(0)}
-  .tile .ic{font-size:2.6rem;line-height:1}
-  .tile .lb{font-weight:700;margin-top:10px;font-size:1.05rem}
-  .tile .sub{color:var(--muted);font-size:.8rem;margin-top:3px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 16px;
-    box-shadow:var(--shadow);margin-top:14px}
-  .back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--accent);
-    font-size:1rem;cursor:pointer;padding:8px 4px;margin-top:6px}
-  h2.sec{font-size:1.15rem;margin:14px 4px 2px}
-  .subj-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-  .subj{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
-    border-radius:14px;padding:14px;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s}
-  .subj:hover{transform:translateY(-2px)}
-  .subj .ic{font-size:1.8rem}
-  .subj .nm{font-weight:700}
-  .subj .dl{color:var(--muted);font-size:.78rem}
-  .full{grid-column:1 / -1;justify-content:center;background:#eef3ff;border-color:#d6e2ff}
-  .qhead{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.85rem}
-  .prog{height:8px;background:#eef1f6;border-radius:99px;overflow:hidden;margin:10px 0 4px}
-  .prog > i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
-  .qtext{font-size:1.15rem;font-weight:700;margin:14px 0;line-height:1.5}
-  .choices{display:flex;flex-direction:column;gap:10px}
-  .choice{text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:13px 14px;
-    font-size:1rem;cursor:pointer;transition:border-color .1s,background .1s}
-  .choice:hover{border-color:var(--accent)}
-  .choice.correct{border-color:var(--ok);background:#eafaf4}
-  .choice.wrong{border-color:var(--ng);background:#ffeeee}
-  .answerbox{display:flex;gap:8px;margin-top:6px}
-  .answerbox input{flex:1;font-size:1.05rem;padding:12px;border:2px solid var(--line);border-radius:12px}
-  .answerbox input:focus{outline:none;border-color:var(--accent)}
-  .btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:12px 18px;font-size:1rem;
-    font-weight:700;cursor:pointer}
-  .btn.sub{background:#eef3ff;color:var(--accent)}
-  .btn.ghost{background:#fff;color:var(--muted);border:1px solid var(--line)}
-  .btn.sm{padding:8px 12px;font-size:.9rem}
-  .verdict{margin-top:14px;font-weight:700;font-size:1.05rem}
+  .tile .ic{font-size:2.4rem;line-height:1}
+  .tile .lb{font-weight:700;margin-top:9px}
+  .tile .sub{color:var(--muted);font-size:.78rem;margin-top:3px}
+  .tile.wide{grid-column:1/-1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-top:14px}
+  .back{display:inline-flex;gap:6px;background:none;border:none;color:var(--accent);font-size:1rem;cursor:pointer;padding:8px 4px;margin-top:4px}
+  h2.sec{font-size:1.1rem;margin:14px 4px 2px}
+  .hint{color:var(--muted);font-size:.82rem;line-height:1.6}
+  /* チップ選択 */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .chip{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:99px;padding:8px 14px;
+    font-size:.9rem;cursor:pointer;transition:all .12s}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+  .btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:12px;
+    padding:13px 20px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);box-shadow:none}
+  .btn.block{display:block;width:100%;margin-top:14px}
+  /* クイズ */
+  .qhead{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.82rem}
+  .prog{height:8px;background:rgba(130,150,200,.18);border-radius:99px;overflow:hidden;margin:10px 0}
+  .prog>i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+  .word{text-align:center;padding:18px 6px 6px}
+  .word .en{font-size:2.3rem;font-weight:800;letter-spacing:.01em}
+  .word .pos{display:inline-block;margin-top:8px;font-size:.78rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:2px 10px}
+  .word .ja{font-size:1.7rem;font-weight:800}
+  .opts{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+  .opt{text-align:left;background:var(--bg2);border:2px solid var(--line);border-radius:12px;padding:14px;font-size:1.05rem;
+    color:var(--ink);cursor:pointer;transition:border-color .1s,background .1s}
+  .opt:hover{border-color:var(--accent)}
+  .opt.correct{border-color:var(--ok);background:rgba(46,230,166,.14)}
+  .opt.wrong{border-color:var(--ng);background:rgba(255,107,129,.14)}
+  .verdict{margin-top:14px;font-weight:800;font-size:1.1rem;text-align:center}
   .verdict.ok{color:var(--ok)} .verdict.ng{color:var(--ng)}
-  .explain{margin-top:8px;background:#f6f8fc;border-radius:10px;padding:10px 12px;color:#48566a;font-size:.95rem}
-  .next{margin-top:16px;text-align:right}
-  .score{text-align:center;padding:10px 0}
-  .score .big{font-size:2.6rem;font-weight:800;color:var(--accent)}
-  .score .msg{margin-top:8px;font-size:1.05rem}
-  .day{border-left:4px solid var(--accent);padding:6px 0 6px 12px;margin:12px 0}
-  .day .d{font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:8px}
-  .day .edit{background:none;border:1px solid var(--line);border-radius:8px;color:var(--accent);
-    cursor:pointer;font-size:.8rem;padding:3px 9px;flex:none}
-  .task{font-size:.93rem;margin:4px 0;color:#3c4858}
-  .task .min{color:var(--accent);font-weight:700}
-  .note{font-size:.9rem;color:#2d7d5a;background:#eafaf4;border-radius:8px;padding:6px 10px;margin-top:5px}
-  .rem{font-size:.85rem;color:#c0392b;margin-top:3px}
-  .test-badge{display:inline-block;background:#fff2cc;color:#a6791b;border-radius:6px;padding:2px 8px;font-size:.8rem;font-weight:700}
-  .edited-badge{display:inline-block;background:#eef3ff;color:var(--accent);border-radius:6px;padding:1px 7px;font-size:.72rem;margin-left:6px}
-  .tip{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
-  .tip:last-child{border:none}
-  .tip .n{flex:none;width:26px;height:26px;border-radius:50%;background:#eef3ff;color:var(--accent);
-    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
-  .scope-h{font-weight:700;margin-top:6px}
-  .scope-h .em{font-size:1.2rem;margin-right:6px}
-  .scope-meta{font-size:.9rem;color:#48566a;margin:4px 0 0 30px}
-  /* フォーム */
-  .field{margin:10px 0}
-  .field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
-  .field input,.field textarea{width:100%;font-size:1rem;padding:10px;border:1px solid var(--line);
-    border-radius:10px;font-family:inherit}
-  .field input:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
-  .field textarea{min-height:64px;resize:vertical}
-  .edit-subj{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:12px;background:#fbfcfe}
-  .edit-subj .head{font-weight:700;font-size:1.05rem}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-  .savebar{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(245,247,251,0),var(--bg) 40%);
-    padding:14px 0 4px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
-  .hint{font-size:.82rem;color:var(--muted);margin-top:6px;line-height:1.6}
-  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#26303b;color:#fff;
-    padding:10px 18px;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+  .next{margin-top:16px;text-align:center}
+  /* フラッシュカード */
+  .flash{min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;
+    border:2px dashed var(--line);border-radius:16px;padding:24px;text-align:center;user-select:none}
+  .flash small{color:var(--muted);font-size:.8rem;margin-top:14px}
+  .fbtns{display:flex;gap:10px;margin-top:14px}
+  .fbtns .btn{flex:1}
+  /* 結果 */
+  .score{text-align:center;padding:8px 0}
+  .score .big{font-size:2.8rem;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  /* テーブル(不規則動詞) */
+  .tbl{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:8px}
+  .tbl th,.tbl td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left}
+  .tbl th{color:var(--muted);font-weight:600;font-size:.8rem}
+  .tbl .en{font-weight:700}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#000a;color:#fff;padding:10px 18px;
+    border-radius:99px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9;backdrop-filter:blur(6px)}
   .toast.show{opacity:1}
-  .hidden{display:none}
-  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:30px}
+  footer{text-align:center;color:var(--muted);font-size:.76rem;margin-top:26px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <h1>📚 才弥さん 期末テスト対策</h1>
-    <div class="countdown" id="countdown"></div>
+    <h1>📗 英検3級 単語トレーニング</h1>
+    <div class="tag">才弥さんの合格プロジェクト</div>
   </header>
   <div id="app"></div>
-  <footer>がんばれ才弥さん！ ／ 努力して結果が出れば自信に、出なくても経験が残る。</footer>
+  <footer>コツコツ続けよう。毎日20語でも、続ければ大きな力に。</footer>
 </div>
 <div class="toast" id="toast"></div>
 
+<script src="words.js"></script>
 <script>
-// ============ 既定データ（編集していないときの初期値） ============
-const DEFAULT_SUBJECTS = [
-  { name:"社会", icon:"🌏", month:6, day:29, submitDate:"2026-06-29",
-    scope:"【歴史】教科書 P168〜239 ／ ワーク P58②〜P67,68① 【時事】4〜6月のニュース",
-    submit:"ワーク提出：6/29(月)",
-    advice:"重要語句＋歴史の流れ・地図・資料も確認。単元テストを見直す。時事は新聞/ニュースで補強。",
-    problems:[
-      {q:"第一次世界大戦のきっかけとなった、1914年の暗殺事件を何という？",answer:"サラエボ事件",accept:["サラエボ事件","サラエヴォ事件"],explain:"オーストリア皇位継承者夫妻がサラエボで暗殺され、第一次世界大戦が始まった。"},
-      {q:"1919年に結ばれた、第一次世界大戦の講和条約は？",answer:"ベルサイユ条約",accept:["ベルサイユ条約","ヴェルサイユ条約"],explain:"ドイツに巨額の賠償金と軍備制限を課した。"},
-      {q:"1929年にアメリカから始まり世界中に広がった不況を何という？",answer:"世界恐慌",accept:["世界恐慌","世界大恐慌"],explain:"ニューヨークの株価大暴落をきっかけに各国へ波及した。"},
-      {q:"日本が満州事変への国際的批判を受け、1933年に脱退した国際機関は？",answer:"国際連盟",accept:["国際連盟","連盟"],explain:"リットン調査団の報告を不服として脱退し、国際的に孤立していった。"},
-      {q:"1945年8月6日に世界で初めて原子爆弾が投下された都市は？",choices:["東京","広島","長崎","大阪"],answer:"広島",accept:["広島"],explain:"8月6日広島、8月9日長崎に原子爆弾が投下された。"},
-      {q:"日本が無条件降伏を受け入れた、1945年の連合国の宣言は？",answer:"ポツダム宣言",accept:["ポツダム宣言"],explain:"1945年8月14日に受諾、15日に終戦を国民に伝えた（玉音放送）。"},
-      {q:"日本国憲法の三大原則のうち、戦争放棄を定めた条文は第何条？",choices:["第1条","第9条","第25条","第99条"],answer:"第9条",accept:["第9条"],explain:"第9条は戦争放棄・戦力不保持・交戦権の否認を定める。"},
-      {q:"1956年の日ソ共同宣言の後、日本が加盟を認められた国際機関は？",answer:"国際連合",accept:["国際連合","国連"],explain:"ソ連の支持が得られ、1956年に国際連合へ加盟した。"},
-    ]},
-  { name:"数学", icon:"📐", month:7, day:3, submitDate:"",
-    scope:"教科書 P12〜P56 ／ ワーク P4〜P43 ／ 単元テスト「多項式」（展開・因数分解・根号を含む数）",
-    submit:"",
-    advice:"ワーク・教科書を繰り返し解き直す。展開/因数分解/根号の計算＋証明など応用にも挑戦。",
-    problems:[
-      {q:"(x+3)(x-5) を展開せよ",answer:"x²-2x-15",accept:["x^2-2x-15","x²-2x-15"],explain:"x²+(3-5)x+(3×-5)=x²-2x-15。"},
-      {q:"(2x+1)² を展開せよ",answer:"4x²+4x+1",accept:["4x^2+4x+1","4x²+4x+1"],explain:"(a+b)²=a²+2ab+b²。(2x)²+2·2x·1+1²=4x²+4x+1。"},
-      {q:"x²+7x+12 を因数分解せよ",answer:"(x+3)(x+4)",accept:["(x+3)(x+4)","(x+4)(x+3)"],explain:"かけて12・たして7 → 3と4。"},
-      {q:"x²-9 を因数分解せよ",answer:"(x+3)(x-3)",accept:["(x+3)(x-3)","(x-3)(x+3)"],explain:"a²-b²=(a+b)(a-b) の公式。"},
-      {q:"√12 を a√b の形に簡単にせよ",answer:"2√3",accept:["2√3","2ルート3"],explain:"√12=√(4×3)=2√3。"},
-      {q:"√50 - √18 を計算せよ",answer:"2√2",accept:["2√2","2ルート2"],explain:"5√2-3√2=2√2。"},
-      {q:"(√3+1)(√3-1) を計算せよ",answer:"2",accept:["2"],explain:"(a+b)(a-b)=a²-b² → 3-1=2。"},
-      {q:"6/√2 の分母を有理化せよ",answer:"3√2",accept:["3√2","3ルート2"],explain:"6/√2 = 6√2/2 = 3√2。"},
-    ]},
-  { name:"国語", icon:"✍️", month:7, day:6, submitDate:"",
-    scope:"『握手』『俳句の世界』『和語・漢語・外来語』ほか ／ 範囲の漢字 ／ これまでの小テスト",
-    submit:"ワーク P6〜47",
-    advice:"教科書を読み直し、授業・家庭学習プリントを復習。漢字の読み書きを確実に。",
-    problems:[
-      {q:"小説『握手』の作者は誰？",answer:"井上ひさし",accept:["井上ひさし"],explain:"ルロイ修道士との交流を描いた井上ひさしの作品。"},
-      {q:"俳句で、季節を表すために詠み込む言葉を何という？",answer:"季語",accept:["季語"],explain:"1つの俳句に季語は原則1つ（季重なりに注意）。"},
-      {q:"俳句の基本の音数（リズム）は？",choices:["五・七・五","五・七・五・七・七","七・五調","五・五・七"],answer:"五・七・五",accept:["五・七・五","5-7-5","五七五"],explain:"五・七・五の十七音が基本。字余り・字足らずもある。"},
-      {q:"次のうち「外来語」はどれ？",choices:["山（やま）","登山（とざん）","ピアノ","手紙"],answer:"ピアノ",accept:["ピアノ"],explain:"和語=訓読み中心、漢語=音読み中心、外来語=主に欧米から入った語（カタカナ）。"},
-      {q:"「山（やま）」のように訓読みで読む、日本固有の言葉の種類は？",answer:"和語",accept:["和語","やまとことば"],explain:"和語は訓読み、漢語は音読みが基本。"},
-      {q:"漢字の読みを答えよ：「貢献」",answer:"こうけん",accept:["こうけん"],explain:"「貢献（こうけん）」＝役に立つように力をつくすこと。"},
-      {q:"漢字の読みを答えよ：「拍手」",answer:"はくしゅ",accept:["はくしゅ"],explain:"「拍手（はくしゅ）」。"},
-      {q:"ひらがなを漢字に直せ：「ちんもく」",answer:"沈黙",accept:["沈黙"],explain:"「沈黙（ちんもく）」＝だまっていること。"},
-    ]},
-  { name:"英語", icon:"🔤", month:7, day:10, submitDate:"2026-07-10",
-    scope:"教科書 P8〜P37 ／ ワーク P4〜P37（P35を除く）",
-    submit:"ワーク提出：7/10(金)（テスト終了後に回収）",
-    advice:"ワークを何回も解き直す。対話文（AさんBさんの文）を確認する。",
-    problems:[
-      {q:"現在完了「すでに〜した」：I have ( ) finished my homework.",choices:["already","yet","ago","since"],answer:"already",accept:["already"],explain:"肯定文の「すでに」は already。yet は疑問・否定で使う。"},
-      {q:"経験：Have you ever ( ) Kyoto?",choices:["visit","visits","visited","visiting"],answer:"visited",accept:["visited"],explain:"現在完了は have/has + 過去分詞。visit-visited-visited。"},
-      {q:"継続：She ( ) lived here for ten years.",choices:["have","has","is","had"],answer:"has",accept:["has"],explain:"主語 She（3人称単数）なので has。"},
-      {q:"関係代名詞：This is the book ( ) I bought yesterday.",choices:["who","which","what","whose"],answer:"which",accept:["which"],explain:"先行詞が物（the book）で目的格なので which（that も可）。"},
-      {q:"受け身：This temple ( ) built 500 years ago.",choices:["is","was","has","did"],answer:"was",accept:["was"],explain:"過去の受け身は was/were + 過去分詞。"},
-      {q:"現在完了の継続で「〜の間」を表すのは？",choices:["for","since","during","while"],answer:"for",accept:["for"],explain:"for＋期間（for ten years）、since＋起点（since 2010）。"},
-      {q:"日本語にせよ：I have just arrived at the station.",answer:"私はちょうど駅に着いたところだ",accept:["ちょうど駅に着いたところ","ちょうど駅についたところ","私はちょうど駅に着いたところだ"],explain:"完了用法 have just + 過去分詞＝「ちょうど〜したところ」。"},
-    ]},
-  { name:"理科", icon:"🔬", month:7, day:13, submitDate:"2026-07-01",
-    scope:"教科書 P6〜83（単元：運動とエネルギー）／ ワーク P2〜33",
-    submit:"ワーク提出：7/1(水)（丸付け・訂正まで／教科連絡係が回収）",
-    advice:"教科書・ノートを見直す。作図や計算問題は必ず出る。ワークを何回も解き直す。",
-    problems:[
-      {q:"一直線上を一定の速さで進む運動を何という？",answer:"等速直線運動",accept:["等速直線運動"],explain:"力がはたらかない（つり合う）とき、物体は等速直線運動を続ける。"},
-      {q:"物体がそのままの運動を続けようとする性質に関する法則を何という？",answer:"慣性の法則",accept:["慣性の法則","慣性"],explain:"外から力がはたらかなければ、静止は静止、運動は等速直線運動を続ける。"},
-      {q:"仕事の単位は？",choices:["N","J","W","Pa"],answer:"J",accept:["j","ジュール"],explain:"仕事〔J〕＝力〔N〕×力の向きに動いた距離〔m〕。"},
-      {q:"100Nの物体を2m持ち上げたときの仕事は何J？",answer:"200J",accept:["200","200j"],explain:"仕事＝100N×2m＝200J。"},
-      {q:"一定時間あたりにする仕事の量（仕事率）の単位は？",choices:["N","J","W","m/s"],answer:"W",accept:["w","ワット"],explain:"仕事率〔W〕＝仕事〔J〕÷時間〔s〕。"},
-      {q:"高い位置にある物体がもつエネルギーを何という？",answer:"位置エネルギー",accept:["位置エネルギー"],explain:"高さが高いほど、質量が大きいほど大きい。"},
-      {q:"位置エネルギーと運動エネルギーの和を何という？",answer:"力学的エネルギー",accept:["力学的エネルギー"],explain:"摩擦などがなければ一定に保たれる（力学的エネルギー保存の法則）。"},
-      {q:"120kmを2時間で進んだときの平均の速さは時速何km？",answer:"60km/h",accept:["60","60km/h","時速60km","60km"],explain:"速さ＝距離÷時間＝120÷2＝60km/h。"},
-    ]},
-];
-const WD=["日","月","火","水","木","金","土"];
+const DATA = window.EIKEN_DATA || {categories:[],irregular:[]};
+// 全単語をフラットに（重複はenで排除）
+const ALL=[];
+{const seen=new Set();
+ for(const c of DATA.categories)for(const w of c.words){if(seen.has(w.en))continue;seen.add(w.en);ALL.push(Object.assign({cat:c.name},w));}}
+const CATS=DATA.categories.map(c=>c.name);
+const IRR=DATA.irregular||[];
 
-// ============ 保存（localStorage）============
-// STORE = { subjects:{教科名:{testDate,submitDate,scope,submit,advice}}, settings:{weekdayMin,weekendMin}, days:{ISO日付:{note,plan}} }
-const STORE_KEY="saiya_study_v1";
-function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){return{};}}
-function saveStore(){localStorage.setItem(STORE_KEY,JSON.stringify(STORE));cloudAutoPush();}
-let STORE=loadStore();
-STORE.subjects=STORE.subjects||{};
-STORE.settings=Object.assign({weekdayMin:60,weekendMin:120},STORE.settings||{});
-STORE.days=STORE.days||{};
+// ============ 進捗（localStorage）============
+const PKEY="eiken3_progress_v1";
+let PROG=(()=>{try{return JSON.parse(localStorage.getItem(PKEY))||{};}catch(e){return{};}})();
+function saveProg(){localStorage.setItem(PKEY,JSON.stringify(PROG));}
+function p(en){return PROG[en]||{s:0,m:false,w:false};}
+function markRight(en){const o=p(en);o.s=(o.s||0)+1;if(o.s>=2){o.m=true;o.w=false;}PROG[en]=o;saveProg();}
+function markWrong(en){const o=p(en);o.s=0;o.m=false;o.w=true;PROG[en]=o;saveProg();}
+function masteredCount(){return ALL.filter(w=>p(w.en).m).length;}
+function weakWords(){return ALL.filter(w=>p(w.en).w);}
 
-// ============ クラウド同期（GitHubのconfig/data.jsonに保存）============
-// 各端末で「鍵(トークン)」を1回設定すれば、起動時に自動取得・保存時に自動アップロードして
-// どの端末でも同じ状態になる。読み取りは公開リポジトリなので鍵なしでも可能。
-const GH={owner:"kurigorira",repo:"clau-siken",path:"config/data.json",branch:"main"};
-const TOKEN_KEY="saiya_gh_token";
-let CLOUD_SHA=null;          // 更新に必要な現在ファイルのSHA
-let CLOUD_BUSY=false;        // 二重送信防止
-function ghToken(){return localStorage.getItem(TOKEN_KEY)||"";}
-function b64encode(str){const bytes=new TextEncoder().encode(str);let bin="";bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin);}
-function b64decode(b64){const bin=atob((b64||"").replace(/\n/g,""));return new TextDecoder().decode(Uint8Array.from(bin,c=>c.charCodeAt(0)));}
-function normalizeStore(o){return {subjects:o.subjects||{},settings:Object.assign({weekdayMin:60,weekendMin:120},o.settings||{}),days:o.days||{}};}
-
-async function cloudGet(){
-  const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.path}?ref=${GH.branch}&_=${Date.now()}`;
-  const h={"Accept":"application/vnd.github+json"};const t=ghToken();if(t)h.Authorization="Bearer "+t;
-  const res=await fetch(url,{headers:h,cache:"no-store"});
-  if(res.status===404){CLOUD_SHA=null;return null;}
-  if(!res.ok)throw new Error("GET "+res.status);
-  const j=await res.json();CLOUD_SHA=j.sha;return JSON.parse(b64decode(j.content));
-}
-async function cloudPull(){
-  try{const data=await cloudGet();if(data){STORE=normalizeStore(data);localStorage.setItem(STORE_KEY,JSON.stringify(STORE));return true;}}
-  catch(e){/* オフライン等はローカルの内容を使う */}
-  return false;
-}
-async function cloudPush(){
-  const t=ghToken();if(!t)throw new Error("no-token");
-  try{await cloudGet();}catch(e){} // 競合回避のため最新SHAを取得
-  const url=`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.path}`;
-  const body={message:"勉強設定を更新",content:b64encode(JSON.stringify(STORE,null,1)),branch:GH.branch};
-  if(CLOUD_SHA)body.sha=CLOUD_SHA;
-  const res=await fetch(url,{method:"PUT",headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer "+t,"Content-Type":"application/json"},body:JSON.stringify(body)});
-  if(!res.ok)throw new Error("PUT "+res.status);
-  const j=await res.json();CLOUD_SHA=j.content.sha;
-}
-// 保存時に鍵があれば自動でアップロード
-function cloudAutoPush(){
-  if(!ghToken()||CLOUD_BUSY)return;
-  CLOUD_BUSY=true;
-  cloudPush().then(()=>toast("クラウドに保存しました")).catch(()=>toast("クラウド保存に失敗（鍵を確認）")).finally(()=>{CLOUD_BUSY=false;});
-}
-
-// 既定値に編集内容を重ねた「実際に使う教科リスト」を返す
-function getSubjects(){
-  return DEFAULT_SUBJECTS.map(d=>{
-    const o=STORE.subjects[d.name]||{};
-    let month=d.month, day=d.day;
-    if(o.testDate){const p=o.testDate.split("-").map(Number);month=p[1];day=p[2];}
-    return {
-      name:d.name, icon:d.icon, month, day,
-      submitDate:o.submitDate!==undefined?o.submitDate:(d.submitDate||""),
-      scope:o.scope!==undefined?o.scope:d.scope,
-      submit:o.submit!==undefined?o.submit:d.submit,
-      advice:o.advice!==undefined?o.advice:d.advice,
-      problems:d.problems,
-    };
-  });
-}
-
-// ============ 日付ユーティリティ ============
-function today(){const n=new Date();const s=new Date(2026,5,13);return n<s?s:n;}
-function testDate(s){return new Date(2026,s.month-1,s.day);}
-function dayDiff(a,b){return Math.round((stripTime(b)-stripTime(a))/86400000);}
-function stripTime(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
-function fmt(d){return (d.getMonth()+1)+"/"+d.getDate();}
-function iso(d){const m=String(d.getMonth()+1).padStart(2,"0");const dd=String(d.getDate()).padStart(2,"0");return d.getFullYear()+"-"+m+"-"+dd;}
-function sameDay(a,b){return stripTime(a).getTime()===stripTime(b).getTime();}
-function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
-
-function nextTest(t){
-  let best=null,name="";
-  for(const s of getSubjects()){const td=testDate(s);if(td<stripTime(t))continue;if(!best||td<best){best=td;name=s.name;}}
-  if(!best)return null;
-  return {name,days:dayDiff(t,best)};
-}
-
-// ============ スケジュール生成 ============
-function phaseDetail(s,daysUntil){
-  if(daysUntil<=2)return"総仕上げ：暗記の最終確認＋単元テスト/ワークの間違い直し";
-  if(daysUntil<=6)return"問題演習：ワークを2周目、間違えた問題を中心に解き直し";
-  return"基礎固め：教科書を読み直し＋ワークを1周";
-}
-function remindersFor(d,subs){
-  const out=[];
-  for(const s of subs){
-    if(!s.submitDate)continue;
-    const p=s.submitDate.split("-").map(Number);
-    const due=new Date(p[0],p[1]-1,p[2]);
-    const dd=dayDiff(d,due);
-    if(dd>=0&&dd<=3){
-      const label=`${s.name}ワーク提出（${p[1]}/${p[2]}）`;
-      out.push(dd===0?("★本日提出: "+label):("提出まであと"+dd+"日: "+label));
-    }
-  }
-  return out;
-}
-function genSchedule(start){
-  const subs=getSubjects().slice().sort((a,b)=>testDate(a)-testDate(b));
-  const last=testDate(subs[subs.length-1]);
-  const wkd=STORE.settings.weekdayMin, wke=STORE.settings.weekendMin;
-  const plans=[];
-  for(let d=stripTime(start);d<=last;d=new Date(d.getTime()+86400000)){
-    const plan={date:new Date(d),tasks:[],reminders:remindersFor(d,subs),testToday:"",note:"",custom:false};
-    for(const s of subs)if(sameDay(testDate(s),d))plan.testToday=s.name;
-    const up=subs.filter(s=>testDate(s)>=stripTime(d));
-    // 自動生成（おまかせ）
-    if(up.length>0){
-      const wd=d.getDay();let budget=(wd===0||wd===6)?wke:wkd;
-      const next=up[0];const du=dayDiff(d,testDate(next));
-      if(du<=2){plan.tasks.push({subject:next.name,min:budget,detail:phaseDetail(next,du)});}
-      else if(up.length>=2){const p=Math.floor(budget*2/3);const sec=up[1];
-        plan.tasks.push({subject:next.name,min:p,detail:phaseDetail(next,du)});
-        plan.tasks.push({subject:sec.name,min:budget-p,detail:phaseDetail(sec,dayDiff(d,testDate(sec)))});}
-      else{plan.tasks.push({subject:next.name,min:budget,detail:phaseDetail(next,du)});}
-    }
-    // 手動編集（上書き）
-    const ov=STORE.days[iso(d)];
-    if(ov){
-      plan.note=ov.note||"";
-      if(ov.plan&&ov.plan.trim()!==""){
-        plan.tasks=ov.plan.split("\n").map(l=>l.trim()).filter(l=>l!=="").map(l=>({line:l}));
-        plan.custom=true;
-      }
-    }
-    plans.push(plan);
-  }
-  return plans;
-}
-
-// ============ 答え合わせ ============
-function normalize(s){
-  s=(s||"").trim();let out="";
-  for(const ch of s){const c=ch.codePointAt(0);
-    if(c>=0xFF10&&c<=0xFF19)out+=String.fromCharCode(c-0xFF10+48);
-    else if(c>=0xFF21&&c<=0xFF3A)out+=String.fromCharCode(c-0xFF21+65);
-    else if(c>=0xFF41&&c<=0xFF5A)out+=String.fromCharCode(c-0xFF41+97);
-    else if(ch==="　"||ch===" "){}
-    else if(ch==="＾")out+="^"; else if(ch==="×")out+="*";
-    else if(ch==="²")out+="^2"; else if(ch==="³")out+="^3";
-    else out+=ch;
-  }
-  return out.toLowerCase();
-}
-function isCorrect(p,input){
-  const n=normalize(input);if(!n)return false;
-  const acc=(p.accept&&p.accept.length)?p.accept:[p.answer];
-  return acc.some(a=>normalize(a)===n);
-}
-
-// ============ 共通UI ============
+// ============ ユーティリティ ============
 const app=document.getElementById("app");
-function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
-  clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),1800);}
-function setCountdown(){
-  const nt=nextTest(today());const el=document.getElementById("countdown");
-  if(!nt){el.innerHTML="🎉 テストはすべて終了！";return;}
-  el.innerHTML = nt.days===0 ? ("今日は <b>"+esc(nt.name)+"</b> のテスト本番！")
-    : ("次のテスト：<b>"+esc(nt.name)+"</b> まで あと <b>"+nt.days+"</b> 日");
-}
-function backBtn(to){return `<button class="back" onclick="${to||'home()'}">← もどる</button>`;}
+function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function sample(arr,n){return shuffle(arr).slice(0,n);}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),1600);}
+function backBtn(fn){return `<button class="back" onclick="${fn||'home()'}">← もどる</button>`;}
 
+// ============ ホーム ============
 function home(){
-  setCountdown();
+  const done=masteredCount(), total=ALL.length, pct=Math.round(done/total*100);
+  const weak=weakWords().length;
   app.innerHTML=`
+    <div class="overall">
+      <div class="lbl"><span>覚えた単語</span><span>${done} / ${total} 語（${pct}%）</span></div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+    </div>
     <div class="grid">
-      <div class="tile" onclick="viewToday()"><div class="ic">📅</div><div class="lb">今日やること</div><div class="sub">きょうの勉強プラン</div></div>
-      <div class="tile" onclick="viewQuizSelect()"><div class="ic">✏️</div><div class="lb">問題集に挑戦</div><div class="sub">クイズで力だめし</div></div>
-      <div class="tile" onclick="viewScope()"><div class="ic">📖</div><div class="lb">テスト範囲</div><div class="sub">範囲と提出物</div></div>
-      <div class="tile" onclick="viewTips()"><div class="ic">💡</div><div class="lb">点数アップ</div><div class="sub">勉強のコツ</div></div>
-      <div class="tile" onclick="viewEdit()"><div class="ic">⚙️</div><div class="lb">編集</div><div class="sub">範囲・提出物・予定</div></div>
-      <div class="tile" onclick="viewSync()"><div class="ic">☁️</div><div class="lb">クラウド同期</div><div class="sub">どの端末でも同じに</div></div>
-    </div>`;
-}
-
-// ============ 今日やること / スケジュール ============
-function viewToday(){
-  const plans=genSchedule(today());const t=today();
-  let body="";
-  const todayPlan=plans.find(p=>sameDay(p.date,t));
-  if(todayPlan){
-    body+=`<div class="card"><h2 class="sec">📅 今日 ${fmt(t)}(${WD[t.getDay()]}) やること</h2>`;
-    body+=renderTaskLines(todayPlan);
-    body+=`</div>`;
-  } else body+=`<div class="card"><p>今日の予定はありません（テスト期間外、または全テスト終了）。</p></div>`;
-  body+=`<h2 class="sec">🗓 これからの全日程 <span class="hint">（各日の「✏️編集」で予定・メモを変えられます）</span></h2><div class="card">`;
-  for(const p of plans){
-    if(p.date<stripTime(t))continue;
-    body+=`<div class="day"><div class="d"><span>${fmt(p.date)}(${WD[p.date.getDay()]})${p.testToday?` <span class="test-badge">本番：${esc(p.testToday)}</span>`:""}${p.custom?`<span class="edited-badge">編集済</span>`:""}</span>
-      <button class="edit" onclick="editDay('${iso(p.date)}')">✏️編集</button></div>`;
-    body+=renderTaskLines(p);
-    body+=`</div>`;
-  }
-  body+=`</div>`;
-  app.innerHTML=backBtn()+body;
-}
-function renderTaskLines(p){
-  let s="";
-  if(p.testToday)s+=`<p><span class="test-badge">★ テスト本番：${esc(p.testToday)}</span></p>`;
-  if(p.tasks.length===0&&!p.testToday)s+=`<p class="task">予定なし</p>`;
-  for(const tk of p.tasks){
-    if(tk.line!==undefined)s+=`<p class="task">・${esc(tk.line)}</p>`;
-    else s+=`<p class="task">・${esc(tk.subject)} <span class="min">${tk.min}分</span> … ${esc(tk.detail)}</p>`;
-  }
-  if(p.note)s+=`<div class="note">📝 ${esc(p.note)}</div>`;
-  for(const r of p.reminders)s+=`<p class="rem">⚠ ${esc(r)}</p>`;
-  return s;
-}
-
-// 1日分の編集画面
-function editDay(isoDate){
-  const ov=STORE.days[isoDate]||{};
-  const [y,m,d]=isoDate.split("-").map(Number);
-  const dt=new Date(y,m-1,d);
-  app.innerHTML=backBtn("viewToday()")+`
-    <h2 class="sec">✏️ ${fmt(dt)}(${WD[dt.getDay()]}) の予定を編集</h2>
-    <div class="card">
-      <div class="field">
-        <label>この日の予定（1行に1つ。空っぽなら自動の「おまかせ」プランに戻ります）</label>
-        <textarea id="ed_plan" placeholder="例）数学 ワークP10〜20&#10;英語 単語テスト勉強 30分"></textarea>
-      </div>
-      <div class="field">
-        <label>メモ（部活・予定など。自由に）</label>
-        <textarea id="ed_note" placeholder="例）午前は部活、夜に勉強"></textarea>
-      </div>
-      <div class="actions">
-        <button class="btn" onclick="saveDay('${isoDate}')">保存</button>
-        <button class="btn ghost" onclick="viewToday()">キャンセル</button>
-        <button class="btn ghost" onclick="clearDay('${isoDate}')">この日をリセット</button>
-      </div>
-      <div class="hint">「予定」を書くと、その日はおまかせプランの代わりにあなたの予定が表示されます。空にして保存すると自動プランに戻ります。</div>
-    </div>`;
-  document.getElementById("ed_plan").value=ov.plan||"";
-  document.getElementById("ed_note").value=ov.note||"";
-}
-function saveDay(isoDate){
-  const plan=document.getElementById("ed_plan").value;
-  const note=document.getElementById("ed_note").value;
-  if((plan&&plan.trim())||(note&&note.trim())){STORE.days[isoDate]={plan:plan,note:note};}
-  else{delete STORE.days[isoDate];}
-  saveStore();toast("保存しました");viewToday();
-}
-function clearDay(isoDate){delete STORE.days[isoDate];saveStore();toast("この日をリセットしました");viewToday();}
-
-// ============ テスト範囲（表示）============
-function viewScope(){
-  let body=`<h2 class="sec">📖 テスト範囲・提出物 <span class="hint">（変更は「⚙️編集」から）</span></h2><div class="card">`;
-  for(const s of getSubjects()){
-    body+=`<div style="margin:10px 0 14px">
-      <div class="scope-h"><span class="em">${s.icon}</span>${esc(s.name)}（${s.month}/${s.day} 実施）</div>
-      <div class="scope-meta">範囲: ${esc(s.scope)}</div>
-      ${s.submit?`<div class="scope-meta">提出: ${esc(s.submit)}</div>`:""}
-      <div class="scope-meta">助言: ${esc(s.advice)}</div></div>`;
-  }
-  body+=`</div>`;
-  app.innerHTML=backBtn()+body;
-}
-
-// ============ 編集（教科＋スケジュール設定）============
-function viewEdit(){
-  const subs=getSubjects();
-  let body=`<h2 class="sec">⚙️ 編集</h2>
-    <div class="card">
-      <div class="head" style="font-weight:700">📐 スケジュール設定</div>
-      <div class="row2">
-        <div class="field"><label>平日の勉強時間（分）</label><input id="set_wkd" type="number" min="0" step="10"></div>
-        <div class="field"><label>休日の勉強時間（分）</label><input id="set_wke" type="number" min="0" step="10"></div>
-      </div>
-      <div class="hint">この時間を各教科に自動で配分します。日ごとの細かい予定は「今日やること」画面の各日「✏️編集」から変えられます。</div>
+      <div class="tile" onclick="setup('en2ja')"><div class="ic">🎯</div><div class="lb">単語テスト</div><div class="sub">英語→意味（4択）</div></div>
+      <div class="tile" onclick="setup('ja2en')"><div class="ic">🔤</div><div class="lb">意味→英語</div><div class="sub">日本語→英語（4択）</div></div>
+      <div class="tile" onclick="setup('flash')"><div class="ic">🃏</div><div class="lb">フラッシュカード</div><div class="sub">めくって覚える</div></div>
+      <div class="tile" onclick="irregular()"><div class="ic">📖</div><div class="lb">不規則動詞</div><div class="sub">変化を覚える（${IRR.length}語）</div></div>
+      <div class="tile wide" onclick="startWeak()"><div class="ic">🔥</div><div class="lb">苦手な単語だけ復習</div><div class="sub">まちがえた ${weak} 語をもう一度</div></div>
     </div>
-    <h2 class="sec">各教科のテスト範囲・提出物</h2>`;
-  subs.forEach((s,i)=>{
-    body+=`<div class="edit-subj">
-      <div class="head">${s.icon} ${esc(s.name)}</div>
-      <div class="row2">
-        <div class="field"><label>テスト日</label><input id="s_date_${i}" type="date"></div>
-        <div class="field"><label>提出物の締切（任意）</label><input id="s_sub_${i}" type="date"></div>
-      </div>
-      <div class="field"><label>テスト範囲</label><textarea id="s_scope_${i}"></textarea></div>
-      <div class="field"><label>提出物（説明）</label><input id="s_subtext_${i}" type="text"></div>
-      <div class="field"><label>アドバイス</label><textarea id="s_adv_${i}"></textarea></div>
-    </div>`;
-  });
-  body+=`<div class="savebar">
-      <button class="btn" onclick="saveEdit()">すべて保存</button>
-      <button class="btn ghost" onclick="home()">もどる</button>
-      <button class="btn ghost" onclick="resetAll()">初期状態に戻す</button>
-    </div>
-    <div class="hint">※ 編集内容はこの端末のブラウザに保存されます。別の端末でも使いたいときは「💾バックアップ」で書き出して読み込んでください。</div>`;
-  app.innerHTML=backBtn()+body;
-  // 値をセット
-  document.getElementById("set_wkd").value=STORE.settings.weekdayMin;
-  document.getElementById("set_wke").value=STORE.settings.weekendMin;
-  subs.forEach((s,i)=>{
-    document.getElementById(`s_date_${i}`).value=`2026-${String(s.month).padStart(2,"0")}-${String(s.day).padStart(2,"0")}`;
-    document.getElementById(`s_sub_${i}`).value=s.submitDate||"";
-    document.getElementById(`s_scope_${i}`).value=s.scope||"";
-    document.getElementById(`s_subtext_${i}`).value=s.submit||"";
-    document.getElementById(`s_adv_${i}`).value=s.advice||"";
-  });
-}
-function saveEdit(){
-  STORE.settings.weekdayMin=Math.max(0,parseInt(document.getElementById("set_wkd").value||"0",10));
-  STORE.settings.weekendMin=Math.max(0,parseInt(document.getElementById("set_wke").value||"0",10));
-  DEFAULT_SUBJECTS.forEach((d,i)=>{
-    STORE.subjects[d.name]={
-      testDate:document.getElementById(`s_date_${i}`).value||"",
-      submitDate:document.getElementById(`s_sub_${i}`).value||"",
-      scope:document.getElementById(`s_scope_${i}`).value,
-      submit:document.getElementById(`s_subtext_${i}`).value,
-      advice:document.getElementById(`s_adv_${i}`).value,
-    };
-  });
-  saveStore();toast("保存しました");home();
-}
-function resetAll(){
-  if(!confirm("すべての編集内容（範囲・提出物・予定・設定）を初期状態に戻します。よろしいですか？"))return;
-  STORE={subjects:{},settings:{weekdayMin:60,weekendMin:120},days:{}};
-  saveStore();toast("初期状態に戻しました");home();
+    <div class="card"><div class="hint">💡 使い方：まず「単語テスト」で挑戦 → まちがえた語は「苦手な単語だけ復習」で反復。正解を2回続けると「覚えた」に入ります。進捗はこの端末に自動保存されます。</div></div>`;
 }
 
-// ============ クラウド同期 ＋ バックアップ ============
-function viewSync(){
-  const hasTok=!!ghToken();
+// ============ 出題設定 ============
+let SETUP={mode:"en2ja",cat:"すべて",count:20};
+function setup(mode){
+  SETUP.mode=mode;SETUP.cat="すべて";
+  const modeName={en2ja:"英語→意味",ja2en:"意味→英語",flash:"フラッシュカード"}[mode];
+  let chips=`<button class="chip on" data-cat="すべて" onclick="pickCat(this)">すべて(${ALL.length})</button>`;
+  for(const c of DATA.categories)chips+=`<button class="chip" data-cat="${esc(c.name)}" onclick="pickCat(this)">${esc(c.name)}(${c.words.length})</button>`;
+  const counts=[10,20,30,50,"すべて"];
+  let cchips="";counts.forEach((n,i)=>{cchips+=`<button class="chip ${n===20?'on':''}" data-cnt="${n}" onclick="pickCnt(this)">${n===''+n?n:n}${n==='すべて'?'':'語'}</button>`;});
   app.innerHTML=backBtn()+`
-    <h2 class="sec">☁️ クラウド同期（どの端末でも同じ状態に）</h2>
+    <h2 class="sec">${modeName}</h2>
     <div class="card">
-      <p class="hint">設定すると、編集内容がこのサイトの保存先（GitHub）に保存され、<b>どの端末でも起動時に最新が読み込まれ、保存時に自動でアップロード</b>されます。読み込みは鍵なしでも自動。<b>編集して全端末へ反映するには、各端末で下の「鍵」を1回だけ設定</b>してください。</p>
-      <div class="field">
-        <label>GitHubの鍵（トークン）— 状態：${hasTok?"✅ 設定済み":"未設定"}</label>
-        <input id="gh_tok" type="password" placeholder="github_pat_... を貼り付け">
-      </div>
-      <div class="actions">
-        <button class="btn" onclick="saveToken()">鍵を保存</button>
-        <button class="btn ghost sm" onclick="clearToken()">鍵を消す</button>
-      </div>
-      <div class="actions" style="margin-top:14px">
-        <button class="btn sub" onclick="manualPull()">⬇ クラウドから取得</button>
-        <button class="btn sub" onclick="manualPush()">⬆ クラウドに保存</button>
-      </div>
-      <div class="hint" style="margin-top:14px">
-        <b>鍵の作り方（1回だけ）：</b><br>
-        ① <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a> を開く<br>
-        ② Repository access →「Only select repositories」で <b>clau-siken</b> を選ぶ<br>
-        ③ Permissions → Repository permissions → <b>Contents</b> を <b>Read and write</b> に<br>
-        ④ Generate して表示された <b>github_pat_…</b> をコピーし、上に貼って「鍵を保存」<br>
-        ※鍵はこの端末のブラウザにだけ保存されます。GitHubの設定からいつでも取り消せます。
-      </div>
-    </div>
-
-    <h2 class="sec">💾 手動バックアップ（鍵を使わない方法）</h2>
-    <div class="card">
-      <p class="hint">鍵を使わず、コピー＆貼り付けで別端末へ移すこともできます。</p>
-      <div class="field"><label>書き出し（この内容をコピー）</label><textarea id="bk_out" readonly></textarea></div>
-      <div class="actions"><button class="btn sub sm" onclick="copyBackup()">コピー</button></div>
-      <div class="field" style="margin-top:18px"><label>読み込み（コピーした内容を貼り付け）</label><textarea id="bk_in" placeholder="ここに貼り付け"></textarea></div>
-      <div class="actions"><button class="btn sm" onclick="importBackup()">読み込む</button><button class="btn ghost sm" onclick="home()">もどる</button></div>
+      <div class="hint">分野をえらぶ</div>
+      <div class="chips" id="catchips">${chips}</div>
+      <div class="hint" style="margin-top:14px">出題数</div>
+      <div class="chips" id="cntchips">${cchips}</div>
+      <button class="btn block" onclick="startQuiz()">スタート ▶</button>
     </div>`;
-  document.getElementById("bk_out").value=JSON.stringify(STORE);
 }
-function saveToken(){
-  const v=document.getElementById("gh_tok").value.trim();
-  if(v){localStorage.setItem(TOKEN_KEY,v);toast("鍵を保存しました");cloudAutoPush();}
-  else{toast("鍵が空です");}
-  viewSync();
-}
-function clearToken(){localStorage.removeItem(TOKEN_KEY);toast("鍵を消しました");viewSync();}
-async function manualPush(){
-  if(!ghToken()){toast("先に鍵を設定してください");return;}
-  toast("保存中…");
-  try{await cloudPush();toast("クラウドに保存しました");}catch(e){toast("保存に失敗（鍵/権限を確認）");}
-}
-async function manualPull(){toast("取得中…");const ok=await cloudPull();toast(ok?"クラウドから取得しました":"取得できませんでした");home();}
-function copyBackup(){const el=document.getElementById("bk_out");el.select();
-  try{navigator.clipboard.writeText(el.value);}catch(e){document.execCommand("copy");}toast("コピーしました");}
-function importBackup(){
-  const v=document.getElementById("bk_in").value.trim();if(!v){toast("貼り付けてください");return;}
-  try{const obj=JSON.parse(v);
-    STORE=normalizeStore(obj);
-    saveStore();toast("読み込みました");home();
-  }catch(e){toast("読み込めませんでした（内容を確認）");}
+function pickCat(el){document.querySelectorAll("#catchips .chip").forEach(c=>c.classList.remove("on"));el.classList.add("on");SETUP.cat=el.dataset.cat;}
+function pickCnt(el){document.querySelectorAll("#cntchips .chip").forEach(c=>c.classList.remove("on"));el.classList.add("on");SETUP.cnt=el.dataset.cnt;SETUP.count=el.dataset.cnt;}
+
+function poolFor(cat){
+  if(cat==="すべて")return ALL.slice();
+  const c=DATA.categories.find(x=>x.name===cat);
+  return c?c.words.map(w=>Object.assign({cat:cat},w)):ALL.slice();
 }
 
-// ============ ヒント ============
-function viewTips(){
-  const tips=[
-    "ワークは2周＋間違い直し。これが一番点になる。",
-    "提出物は締切前に終わらせる。",
-    "間違えた問題はノートに集めて、前日に見返す。",
-    "25分集中＋5分休憩。スマホは別の部屋に。",
-    "数学・理科は途中式と単位を必ず書く（ミス防止）。",
-    "英語は対話文を音読して暗唱、不規則動詞は毎日5個。",
-    "国語は漢字で確実に得点（読み書き両方）。",
-  ];
-  let body=`<h2 class="sec">💡 点数アップのコツ</h2><div class="card">`;
-  tips.forEach((t,i)=>{body+=`<div class="tip"><div class="n">${i+1}</div><div>${esc(t)}</div></div>`;});
-  body+=`</div>`;
-  app.innerHTML=backBtn()+body;
-}
-
-// ============ クイズ ============
-function viewQuizSelect(){
-  const t=today();const subs=getSubjects();
-  let body=`<h2 class="sec">✏️ どの教科に挑戦する？</h2><div class="subj-list">`;
-  subs.forEach((s,i)=>{
-    const du=dayDiff(t,testDate(s));
-    const dl=du>=0?`${s.month}/${s.day}・あと${du}日`:`${s.month}/${s.day}・終了`;
-    body+=`<div class="subj" onclick="startQuiz(${i})"><div class="ic">${s.icon}</div>
-      <div><div class="nm">${esc(s.name)}</div><div class="dl">${dl}</div></div></div>`;
-  });
-  body+=`<div class="subj full" onclick="startQuiz(-1)"><div class="ic">🎯</div><div class="nm">全教科とおして挑戦</div></div>`;
-  body+=`</div>`;
-  app.innerHTML=backBtn()+body;
-}
+// ============ クイズ本体 ============
 let QZ=null;
-function startQuiz(idx){
-  const subs=getSubjects();let items=[];
-  if(idx===-1){for(const s of subs)for(const p of s.problems)items.push({subject:s.name,icon:s.icon,p});}
-  else{const s=subs[idx];for(const p of s.problems)items.push({subject:s.name,icon:s.icon,p});}
-  QZ={items,i:0,correct:0,answered:false};renderQuestion();
+function startQuiz(){
+  const pool=poolFor(SETUP.cat);
+  let n=SETUP.count;if(n==="すべて"||n===undefined)n=pool.length;else n=Math.min(parseInt(n,10),pool.length);
+  const items=sample(pool,n);
+  if(SETUP.mode==="flash")return startFlash(items);
+  QZ={mode:SETUP.mode,items,i:0,correct:0,wrong:[],answered:false};
+  renderQ();
 }
-function renderQuestion(){
-  const {items,i}=QZ;
-  if(i>=items.length){return renderResult();}
-  const it=items[i];const p=it.p;
-  let body=backBtn("viewQuizSelect()");
-  body+=`<div class="card">
-    <div class="qhead"><span>${it.icon} ${esc(it.subject)}</span><span>第 ${i+1} / ${items.length} 問</span></div>
-    <div class="prog"><i style="width:${(i/items.length)*100}%"></i></div>
-    <div class="qtext">${esc(p.q)}</div>`;
-  if(p.choices&&p.choices.length){
-    body+=`<div class="choices" id="choices">`;
-    p.choices.forEach((c,ci)=>{body+=`<button class="choice" onclick="answerChoice(${ci})">${esc(c)}</button>`;});
-    body+=`</div>`;
-  }else{
-    body+=`<div class="answerbox"><input id="ans" type="text" placeholder="答えを入力" autocomplete="off">
-      <button class="btn" onclick="answerText()">こたえる</button></div>`;
-  }
-  body+=`<div id="result"></div></div>`;
+function startWeak(){
+  const weak=weakWords();
+  if(weak.length===0){toast("苦手な単語はありません👍");return;}
+  QZ={mode:"en2ja",items:shuffle(weak),i:0,correct:0,wrong:[],answered:false};
+  renderQ();
+}
+function renderQ(){
+  const {items,i,mode}=QZ;
+  if(i>=items.length)return renderResult();
+  const w=items[i];
+  const en2ja=(mode==="en2ja");
+  // 選択肢作成（同分野からダミー、足りなければ全体から）
+  const poolSame=poolFor(w.cat).filter(x=>x.ja!==w.ja&&x.en!==w.en);
+  const pool=poolSame.length>=3?poolSame:ALL.filter(x=>x.ja!==w.ja&&x.en!==w.en);
+  const distract=sample(pool,3);
+  const opts=shuffle([w,...distract]);
+  let body=backBtn()+`<div class="card">
+    <div class="qhead"><span>${esc(w.cat)}</span><span>第 ${i+1} / ${items.length} 問</span></div>
+    <div class="prog"><i style="width:${i/items.length*100}%"></i></div>
+    <div class="word"><div class="en">${esc(en2ja?w.en:w.ja)}</div>${en2ja?`<div class="pos">${esc(w.pos)}</div>`:""}</div>
+    <div class="opts" id="opts">`;
+  opts.forEach((o,idx)=>{body+=`<button class="opt" data-en="${esc(o.en)}" onclick="answer('${esc(o.en).replace(/'/g,"\\'")}')">${esc(en2ja?o.ja:o.en)}</button>`;});
+  body+=`</div><div id="res"></div></div>`;
   app.innerHTML=body;
-  const inp=document.getElementById("ans");
-  if(inp){inp.focus();inp.addEventListener("keydown",e=>{if(e.key==="Enter")answerText();});}
 }
-function showVerdict(ok){
-  const it=QZ.items[QZ.i];const p=it.p;if(ok)QZ.correct++;
-  const r=document.getElementById("result");
-  r.innerHTML=`<div class="verdict ${ok?'ok':'ng'}">${ok?"⭕ 正解！":"❌ 不正解… 正解は「"+esc(p.answer)+"」"}</div>
-    ${p.explain?`<div class="explain">💡 ${esc(p.explain)}</div>`:""}
-    <div class="next"><button class="btn" onclick="nextQuestion()">${QZ.i+1>=QZ.items.length?"結果を見る →":"次の問題 →"}</button></div>`;
-  QZ.answered=true;
-}
-function answerChoice(ci){
-  if(QZ.answered)return;const it=QZ.items[QZ.i];const p=it.p;
-  const ok=normalize(p.choices[ci])===normalize(p.answer);
-  document.querySelectorAll("#choices .choice").forEach((b,bi)=>{
+function answer(en){
+  if(QZ.answered)return;QZ.answered=true;
+  const w=QZ.items[QZ.i];const ok=(en===w.en);
+  if(ok){QZ.correct++;markRight(w.en);}else{QZ.wrong.push(w);markWrong(w.en);}
+  document.querySelectorAll("#opts .opt").forEach(b=>{
     b.style.pointerEvents="none";
-    if(normalize(p.choices[bi])===normalize(p.answer))b.classList.add("correct");
-    else if(bi===ci&&!ok)b.classList.add("wrong");
+    if(b.dataset.en===w.en)b.classList.add("correct");
+    else if(b.dataset.en===en)b.classList.add("wrong");
   });
-  showVerdict(ok);
+  const en2ja=(QZ.mode==="en2ja");
+  document.getElementById("res").innerHTML=`
+    <div class="verdict ${ok?'ok':'ng'}">${ok?"⭕ 正解！":"❌ 正解は「"+esc(en2ja?w.ja:w.en)+"」"}</div>
+    <div class="next"><button class="btn" onclick="nextQ()">${QZ.i+1>=QZ.items.length?"結果を見る →":"次へ →"}</button></div>`;
 }
-function answerText(){
-  if(QZ.answered)return;const it=QZ.items[QZ.i];const p=it.p;
-  const v=document.getElementById("ans").value;document.getElementById("ans").disabled=true;
-  showVerdict(isCorrect(p,v));
-}
-function nextQuestion(){QZ.i++;QZ.answered=false;renderQuestion();}
+function nextQ(){QZ.i++;QZ.answered=false;renderQ();}
 function renderResult(){
-  const {items,correct}=QZ;const pct=Math.round(correct/items.length*100);
-  let msg;
-  if(correct===items.length)msg="🎉 全問正解！この調子で本番もいける！";
-  else if(pct>=80)msg="👍 よくできています。間違えた問題だけもう一度！";
-  else msg="📚 間違えた問題は解説を読んで、明日また挑戦しよう。";
-  app.innerHTML=backBtn("viewQuizSelect()")+`<div class="card score">
+  const {items,correct,wrong}=QZ;const pct=Math.round(correct/items.length*100);
+  let msg=pct===100?"🎉 全問正解！すばらしい！":pct>=80?"👍 よくできました！":"📚 復習でしっかり定着させよう。";
+  let body=backBtn()+`<div class="card score">
     <div class="big">${correct} / ${items.length}</div>
-    <div>正答率 ${pct}%</div><div class="msg">${esc(msg)}</div>
-    <div style="margin-top:18px"><button class="btn" onclick="viewQuizSelect()">もう一度えらぶ</button></div>
+    <div style="color:var(--muted)">正答率 ${pct}%</div>
+    <div style="margin-top:8px">${esc(msg)}</div>`;
+  if(wrong.length){
+    body+=`<button class="btn block" onclick="retryWrong()">まちがえた ${wrong.length} 語をもう一度</button>`;
+  }
+  body+=`<button class="btn ghost block" onclick="home()">ホームへ</button></div>`;
+  if(wrong.length){
+    body+=`<div class="card"><h2 class="sec" style="margin-top:0">まちがえた単語</h2>`;
+    for(const w of wrong)body+=`<div style="padding:6px 0;border-bottom:1px solid var(--line)"><b>${esc(w.en)}</b> <span style="color:var(--muted)">${esc(w.pos)}</span> … ${esc(w.ja)}</div>`;
+    body+=`</div>`;
+  }
+  app.innerHTML=body;
+}
+function retryWrong(){QZ={mode:QZ.mode,items:shuffle(QZ.wrong),i:0,correct:0,wrong:[],answered:false};renderQ();}
+
+// ============ フラッシュカード ============
+let FC=null;
+function startFlash(items){FC={items,i:0,flipped:false};renderFlash();}
+function renderFlash(){
+  const {items,i,flipped}=FC;
+  if(i>=items.length){app.innerHTML=backBtn()+`<div class="card score"><div class="big">おわり！</div><div style="margin-top:8px">${items.length}枚を確認しました。</div><button class="btn ghost block" onclick="home()">ホームへ</button></div>`;return;}
+  const w=items[i];
+  app.innerHTML=backBtn()+`<div class="card">
+    <div class="qhead"><span>${esc(w.cat)}</span><span>${i+1} / ${items.length}</span></div>
+    <div class="flash" onclick="flip()">
+      <div class="en" style="font-size:2.2rem;font-weight:800">${esc(w.en)}</div>
+      <div class="pos">${esc(w.pos)}</div>
+      ${flipped?`<div class="ja" style="margin-top:14px">${esc(w.ja)}</div>`:`<small>タップで意味を表示</small>`}
+    </div>
+    <div class="fbtns">
+      <button class="btn ghost" onclick="fcMark(false)">まだ</button>
+      <button class="btn" onclick="fcMark(true)">覚えた</button>
+    </div>
+    <div class="hint" style="text-align:center;margin-top:10px">カードをタップすると答えが出ます</div>
   </div>`;
 }
+function flip(){FC.flipped=!FC.flipped;renderFlash();}
+function fcMark(ok){const w=FC.items[FC.i];if(ok)markRight(w.en);else markWrong(w.en);FC.i++;FC.flipped=false;renderFlash();}
 
-// 起動：まずローカルの内容で即表示し、続けてクラウドから最新を取得して反映
-async function initApp(){
-  home();
-  const ok=await cloudPull();
-  if(ok){setCountdown();if(document.querySelector(".grid"))home();}
+// ============ 不規則動詞 ============
+function irregular(){
+  let body=backBtn()+`<div class="card">
+    <h2 class="sec" style="margin-top:0">📖 不規則動詞の変化（${IRR.length}語）</h2>
+    <div class="hint">原形 → 過去形 → 過去分詞。声に出して覚えよう。クイズで確認も。</div>
+    <button class="btn block" onclick="startIrrQuiz()">変化テストに挑戦 ▶</button>
+    <table class="tbl"><tr><th>原形</th><th>過去形</th><th>過去分詞</th><th>意味</th></tr>`;
+  for(const v of IRR)body+=`<tr><td class="en">${esc(v.base)}</td><td>${esc(v.past)}</td><td>${esc(v.pp)}</td><td style="color:var(--muted)">${esc(v.ja)}</td></tr>`;
+  body+=`</table></div>`;
+  app.innerHTML=body;
 }
-initApp();
+let IQ=null;
+function startIrrQuiz(){IQ={items:sample(IRR,Math.min(15,IRR.length)),i:0,correct:0,flipped:false};renderIrrQ();}
+function renderIrrQ(){
+  const {items,i,flipped}=IQ;
+  if(i>=items.length){app.innerHTML=backBtn("irregular()")+`<div class="card score"><div class="big">${IQ.correct} / ${items.length}</div><div style="margin-top:8px">おつかれさま！</div><button class="btn block" onclick="startIrrQuiz()">もう一度</button><button class="btn ghost block" onclick="irregular()">一覧にもどる</button></div>`;return;}
+  const v=items[i];
+  app.innerHTML=backBtn("irregular()")+`<div class="card">
+    <div class="qhead"><span>不規則動詞</span><span>${i+1} / ${items.length}</span></div>
+    <div class="flash" onclick="flipIrr()">
+      <div class="en" style="font-size:2rem;font-weight:800">${esc(v.base)}</div>
+      <div class="pos">${esc(v.ja)}</div>
+      ${flipped?`<div class="ja" style="margin-top:14px;font-size:1.4rem">${esc(v.past)} / ${esc(v.pp)}</div>`:`<small>タップで変化を表示（過去形 / 過去分詞）</small>`}
+    </div>
+    <div class="fbtns">
+      <button class="btn ghost" onclick="irrMark(false)">まちがえた</button>
+      <button class="btn" onclick="irrMark(true)">言えた</button>
+    </div>
+  </div>`;
+}
+function flipIrr(){IQ.flipped=!IQ.flipped;renderIrrQ();}
+function irrMark(ok){if(ok)IQ.correct++;IQ.i++;IQ.flipped=false;renderIrrQ();}
+
+home();
 </script>
 </body>
 </html>
